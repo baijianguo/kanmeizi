@@ -75,9 +75,12 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
-
-		MzituUrl mzt = mData.get(position);
-		openClassActivity(mzt);
+		if ("图片导航".equals(ImageClass.MenuImageTitle[position]))
+			openWebView();
+		else {
+			MzituUrl mzt = mData.get(position);
+			openClassActivity(mzt);
+		}
 
 	}
 
@@ -109,8 +112,7 @@ public class MainActivity extends Activity implements
 				// drawer
 				if ("关于我们".equals(ImageClass.MenuImageTitle[position]))
 					openAboutView();
-				else if ("图片导航".equals(ImageClass.MenuImageTitle[position]))
-					openWebView();
+
 				else {
 					MzituUrl mzt = new MzituUrl(
 							ImageClass.MenuImageTitle[position],
