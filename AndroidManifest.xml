@@ -64,7 +64,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="fir.im" />
+            android:value="iumol" />
         <meta-data
             android:name="@string/app_name"
             android:value="kanmeizi" />
