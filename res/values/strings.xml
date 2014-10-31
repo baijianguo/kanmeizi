@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">看妹子</string>
+    <string name="menu_item_clear_memory_cache">清除内存缓存</string>
+    <string name="menu_item_clear_disc_cache">清除磁盘缓存</string>
+    <string name="menu_item_save_to_disc">保存到本地</string>
+    <string name="image_content">图片描述</string>
+
+     <!-- webview -->
+    <string name="Main.FileChooserPrompt">选择要上载的文件</string>
+    <string name="VideoLoading">加载视频\u2026</string>
+    <string name="Commons.JavaScriptDialog">提示</string>
+    <string name="Commons.Continue">继续</string>
+    <string name="Commons.SslWarning">安全警告</string>
+    <string name="Commons.SslWarningsHeader">网站的安全证书存在问题</string>
+    <string name="Commons.SslUntrusted">安全证书没有可信任发行者.</string>
+    <string name="Commons.SslIDMismatch">站点名和证书不匹配</string>
+    <string name="Commons.SslExpired">证书已经过期</string>
+    <string name="Commons.SslNotYetValid">证书没有验证</string>
+    <string name="HttpAuthenticationDialog.DialogTitle">登录到 %1$s - %2$s</string>
+    <string name="HttpAuthenticationDialog.UserName">姓名</string>
+    <string name="HttpAuthenticationDialog.Password">密码</string>
+    <string name="Commons.Proceed">继续</string>
+    <string name="Commons.Ok">确定</string>
+    <string name="Commons.Cancel">取消</string>
+    <string name="Commons.PleaseWait">请等待</string>
+    <string name="Commons.Yes">是</string>
+    <string name="Commons.No">否</string>
+     <string name="Commons.Auth">Copyright © 2013-2014, 手机看妹子（ %1$s）</string>
+</resources>
