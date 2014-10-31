@@ -75,10 +75,11 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
-		if ("Í¼Æ¬µ¼º½".equals(ImageClass.MenuImageTitle[position]))
+		MzituUrl mzt = mData.get(position);
+		if ("Í¼Æ¬µ¼º½".equals(mzt.getTitle()))
 			openWebView();
 		else {
-			MzituUrl mzt = mData.get(position);
+
 			openClassActivity(mzt);
 		}
 

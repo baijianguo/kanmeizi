@@ -7,17 +7,11 @@ public class ImageClass {
 	public static String[][] MztImageInfo = {
 			{ "图片导航", "" },
 			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
+
 			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
 			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" },
 			{ "网络美女", "http://www.mnchao.com/wlmn_%1$s.html" },
-
-			{ "小清新", "http://www.mzitu.com/mm/page/" },
-			{ "萌妹子", "http://www.mnchao.com/mmz_%1$s.html" },
-			{ "小短裙",
-					"http://www.mzitu.com/tag/%E5%B0%8F%E7%9F%AD%E8%A3%99/page/" },
-			{ "比基尼",
-					"http://www.mzitu.com/tag/%E6%AF%94%E5%9F%BA%E5%B0%BC/page/" },
-			{ "推女郎", "http://www.mzitu.com/tag/tuigirl/page/" },
+			{ "清纯校花", "http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/" },
 
 			{ "台湾美女", "http://www.mzitu.com/taiwan/page/" },
 			{ "丝袜模特", "http://www.mzitu.com/model/page/" },
@@ -25,23 +19,28 @@ public class ImageClass {
 
 			{ "美臀美腿", "http://www.mzitu.com/tag/%E7%BE%8E%E8%87%80/page/" },
 
-			{ "湿身诱惑", "http://www.mzitu.com/tag/%E6%B9%BF%E8%BA%AB/page/" },
-			{ "有沟必火",
-					"http://www.mzitu.com/tag/%E6%9C%89%E6%B2%9F%E5%BF%85%E7%81%AB/page/" } };
+			{ "小清新", "http://www.mzitu.com/mm/page/" },
+			{ "萌妹子", "http://www.mnchao.com/mmz_%1$s.html" },
+			{ "小短裙",
+					"http://www.mzitu.com/tag/%E5%B0%8F%E7%9F%AD%E8%A3%99/page/" },
+			{ "比基尼",
+					"http://www.mzitu.com/tag/%E6%AF%94%E5%9F%BA%E5%B0%BC/page/" },
+			{ "推女郎", "http://www.mzitu.com/tag/tuigirl/page/" } };
 	public static int[] imageDrawable = { R.drawable.gengduo,
-			R.drawable.douban, R.drawable.xiaohua, R.drawable.zipai,
-			R.drawable.wangluo, R.drawable.xiaoqingxin, R.drawable.mengmeizi,
-			R.drawable.xiaoduanqun, R.drawable.bijini, R.drawable.tuinvlang,
-			R.drawable.taiwan, R.drawable.mote, R.drawable.riben,
-			R.drawable.meitun, R.drawable.shishen, R.drawable.yougou };
+			R.drawable.douban, R.drawable.xingan, R.drawable.zipai,
+			R.drawable.wangluo, R.drawable.xiaohua, R.drawable.taiwan,
+			R.drawable.mote, R.drawable.riben, R.drawable.meitun,
+			R.drawable.xiaoqingxin, R.drawable.mengmeizi,
+			R.drawable.xiaoduanqun, R.drawable.bijini, R.drawable.tuinvlang };
 
-	public static String[] MenuImageTitle = { "清纯校花", "丝袜美腿", "魅力模特", "性感美女",
-			"ROSI咪咪", "关于我们" };
+	public static String[] MenuImageTitle = { "湿身诱惑", "丝袜美腿", "魅力模特", "性感美女",
+			"ROSI咪咪", "有沟必火", "关于我们" };
 	public static String[] MenuImageUrl = {
-			"http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/",
+			"http://www.mzitu.com/tag/%E6%B9%BF%E8%BA%AB/page/",
 			"http://www.mnchao.com/swmt_%1$s.html",
 			"http://www.mnchao.com/mlmt_%1$s.html",
 			"http://www.mnchao.com/xgmn_%1$s.html",
+			"http://www.mzitu.com/tag/%E6%9C%89%E6%B2%9F%E5%BF%85%E7%81%AB/page/",
 			"http://www.mzitu.com/tag/rosi/page/",
 
 	};

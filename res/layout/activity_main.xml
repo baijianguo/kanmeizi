@@ -24,7 +24,8 @@
                     android:id="@+id/list_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fadingEdge="none" />
+                    android:fadingEdge="none"
+                    android:scrollbarThumbVertical="@drawable/scrollbar" />
 
                 <ProgressBar
                     android:id="@android:id/empty"
