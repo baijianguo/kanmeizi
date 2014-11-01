@@ -26,6 +26,8 @@ import java.util.List;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.MzituUrl;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements
@@ -43,6 +45,9 @@ public class MainActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		UmengUpdateAgent.update(this);
+
 		setContentView(R.layout.activity_main);
 
 		setTitle(getResources().getString(R.string.app_name));
@@ -215,6 +220,21 @@ public class MainActivity extends Activity implements
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		MobclickAgent.onResume(this);
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		MobclickAgent.onPause(this);
+		super.onPause();
 
 	}
 }

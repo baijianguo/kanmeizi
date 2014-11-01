@@ -28,6 +28,7 @@ import com.iumol.kanmeizi.grid.StaggeredGridView;
 import com.iumol.kanmeizi.runnables.AndroidGetImageUrlRunnable;
 import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
 import com.iumol.kanmeizi.bitmap.core.FinalBitmap;
+import com.umeng.analytics.MobclickAgent;
 
 @SuppressLint({ "NewApi", "CutPasteId" })
 public class ImageListActivity extends Activity implements
@@ -185,6 +186,21 @@ public class ImageListActivity extends Activity implements
 				onLoadMoreItems();
 			}
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		MobclickAgent.onResume(this);
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		MobclickAgent.onPause(this);
+		super.onPause();
+
 	}
 
 	@Override

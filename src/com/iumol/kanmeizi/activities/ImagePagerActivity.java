@@ -266,14 +266,19 @@ public class ImagePagerActivity extends BaseActivity implements
 		this.isloading = isloading;
 	}
 
-	public void onResume() {
-		super.onResume();
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
 		MobclickAgent.onResume(this);
+		super.onResume();
 	}
 
+	@Override
 	public void onPause() {
-		super.onPause();
+		// TODO Auto-generated method stub
 		MobclickAgent.onPause(this);
+		super.onPause();
+
 	}
 
 	@Override

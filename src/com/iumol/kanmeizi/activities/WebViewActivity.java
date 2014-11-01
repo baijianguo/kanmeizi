@@ -5,6 +5,7 @@ import com.iumol.kanmeizi.runnables.WebLoadingProgressRunnable;
 import com.iumol.kanmeizi.util.StringUtils;
 import com.iumol.kanmeizi.view.CustomWebView;
 import com.iumol.kanmeizi.view.CustomWebViewClient;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -101,6 +102,7 @@ public class WebViewActivity extends Activity implements OnClickListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		mWebView.doOnResume();
+		MobclickAgent.onResume(this);
 		super.onResume();
 	}
 
@@ -108,6 +110,7 @@ public class WebViewActivity extends Activity implements OnClickListener,
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		mWebView.doOnPause();
+		MobclickAgent.onPause(this);
 		super.onPause();
 	}
 
