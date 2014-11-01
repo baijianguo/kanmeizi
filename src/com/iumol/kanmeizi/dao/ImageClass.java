@@ -21,17 +21,18 @@ public class ImageClass {
 
 			{ "小清新", "http://www.mzitu.com/mm/page/" },
 			{ "萌妹子", "http://www.mnchao.com/mmz_%1$s.html" },
-			{ "小短裙",
-					"http://www.mzitu.com/tag/%E5%B0%8F%E7%9F%AD%E8%A3%99/page/" },
 			{ "比基尼",
 					"http://www.mzitu.com/tag/%E6%AF%94%E5%9F%BA%E5%B0%BC/page/" },
+			{ "小短裙",
+					"http://www.mzitu.com/tag/%E5%B0%8F%E7%9F%AD%E8%A3%99/page/" },
+
 			{ "推女郎", "http://www.mzitu.com/tag/tuigirl/page/" } };
 	public static int[] imageDrawable = { R.drawable.gengduo,
 			R.drawable.douban, R.drawable.xingan, R.drawable.zipai,
 			R.drawable.wangluo, R.drawable.xiaohua, R.drawable.taiwan,
 			R.drawable.mote, R.drawable.riben, R.drawable.meitun,
-			R.drawable.xiaoqingxin, R.drawable.mengmeizi,
-			R.drawable.xiaoduanqun, R.drawable.bijini, R.drawable.tuinvlang };
+			R.drawable.xiaoqingxin, R.drawable.mengmeizi, R.drawable.bijini,
+			R.drawable.xiaoduanqun, R.drawable.tuinvlang };
 
 	public static String[] MenuImageTitle = { "湿身诱惑", "丝袜美腿", "魅力模特", "性感美女",
 			"ROSI咪咪", "有沟必火", "关于我们" };
