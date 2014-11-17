@@ -27,6 +27,8 @@ import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.grid.StaggeredGridView;
 import com.iumol.kanmeizi.runnables.AndroidGetImageUrlRunnable;
 import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
+import com.iumol.kanmeizi.util.SystemUtils;
+import com.iumol.kanmeizi.util.ToastUtils;
 import com.iumol.kanmeizi.bitmap.core.FinalBitmap;
 import com.umeng.analytics.MobclickAgent;
 
@@ -96,9 +98,14 @@ public class ImageListActivity extends Activity implements
 
 	private void fillAdapter() {
 
-		AndroidGetImageUrlRunnable getlistitem = new AndroidGetImageUrlRunnable(
-				mHandler, mzt.getUrl(), page++);
-		new Thread(getlistitem).start();
+		if (SystemUtils.isNetWorkConnect(this)) {
+			AndroidGetImageUrlRunnable getlistitem = new AndroidGetImageUrlRunnable(
+					mHandler, mzt.getUrl(), page++);
+			new Thread(getlistitem).start();
+		} else {
+			ToastUtils.show(this, "ÍøÂçÁ¬½Ó´íÎó£¡");
+			
+		}
 
 	}
 

@@ -52,6 +52,18 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 				url = String.format(mUrl, page);
 				String strHtml = HttpGet(url);
 				RegexMNCIndex(strHtml);
+			} else if (mUrl.indexOf("weibo.com/area.php") > 0) {
+				url = mUrl + page;
+				String strHtml = HttpGet(url);
+				RegexWeiboIndex(strHtml);
+			} else if (mUrl.indexOf("weibo.com/5show/aixiu.php") > 0) {
+				url = mUrl + page;
+				String strHtml = HttpGet(url);
+				RegexTuxiuIndex(strHtml);
+			} else if (mUrl.indexOf("weimei58.com/") > 0) {
+				url = mUrl + page;
+				String strHtml = HttpUtils.httpGetStringPcAgent(url);
+				Regex58Index(strHtml);
 			} else {
 				url = mUrl + page;
 				String strHtml = HttpGet(url);
@@ -75,15 +87,34 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		String re = "\\[([^\\]]+)\\]";
 		// String str = "[您好]，abcdefg，[abc]";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(str);
-		while (m.find()) {
-			String url = m.group(1);
-			String title = m.group(2);
-			String image_url = m.group(3);
-			// String html = HttpGet(url);
-			// RegexImageUrl(url, html);
-			json += "{\"title\":\"" + title + "\",\"url\":\"" + url
-					+ "\",\"image_url\":\"" + image_url + "\"},";
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String url = m.group(1);
+				String title = m.group(2);
+				String image_url = m.group(3);
+				// String html = HttpGet(url);
+				// RegexImageUrl(url, html);
+				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+						+ "\",\"image_url\":\"" + image_url + "\"},";
+			}
+		}
+	}
+
+	public void Regex58Index(String str) {
+
+		String reg = "c cl.*?\n.*?href=\"(.*?)\".*?title=\"(.*?)\".*?\n.*?src=\"(.*?)\"";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String url = m.group(1);
+				String title = m.group(2);
+				String image_url = m.group(3);
+				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+						+ "\",\"image_url\":\"http://www.weimei58.com/" + image_url + "\"},";
+			}
+
 		}
 	}
 
@@ -92,11 +123,13 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 		String reg = "single-post-content.*src=\"(.*?)\".*?/></p></div>";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(str);
-		while (m.find()) {
-			String image_url = m.group(1);
-			json += "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
-					+ "\"},";
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				json += "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
+						+ "\"},";
+			}
 		}
 	}
 
@@ -109,35 +142,79 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 		String reg = "data-bigimg=\"(.*?)\".*?data-title=\"(.*?)\".*?data-url";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(str);
-		while (m.find()) {
-			String image_url = m.group(1);
-			String title = m.group(2);
-			json += "{\"title\":\"" + title + "\",\"image_url\":\"" + image_url
-					+ "\"},";
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				String title = m.group(2);
+				json += "{\"title\":\"" + title + "\",\"image_url\":\""
+						+ image_url + "\"},";
+			}
+		}
+	}
+
+	// 从微博获取list
+	public void RegexTuxiuIndex(String str) {
+
+		String reg = "long_img.*?src=\"(.*?)\".*?\n.*?\n.*?\n.*?show_link_id.*?href=\"(.*?)\".*?>(.*?)</a>";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				String url = "http://vgirl.weibo.com/5show/";
+				url += m.group(2);
+				String title = m.group(3);
+				json += "{\"title\":\"" + title + "\",\"image_url\":\""
+						+ image_url + "\",\"url\":\"" + url + "\"},";
+			}
+		}
+	}
+
+	// 从微博获取list
+	public void RegexWeiboIndex(String str) {
+
+		String reg = "<li>.*?\n.*?href=\"(.*?)\".*?\n.*?src=\"(.*?)\".*?title=\"(.*?)\"";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+
+				String url = "http://vgirl.weibo.com";
+				url += m.group(1);
+				String image_url = m.group(2);
+				String title = m.group(3);
+				json += "{\"title\":\"" + title + "\",\"image_url\":\""
+						+ image_url + "\",\"url\":\"" + url + "\"},";
+			}
 		}
 	}
 
 	public void RegexMNCIndex(String strHtml) {
 		String reg = "<li>.*?href=\"(.*?)\\.html\".*?title=\"(.*?)\".*?src=\".*?upaiyun.com/(.*?)!smallimg\".*?<span>";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(strHtml);
-		while (m.find()) {
-			String url = m.group(1);
-			String title = m.group(2);
-			String image_url = m.group(3);
+		if (!StringUtils.isBlank(strHtml)) {
+			Matcher m = p.matcher(strHtml);
+			while (m.find()) {
+				String url = m.group(1);
+				String title = m.group(2);
+				String image_url = m.group(3);
 
-			try {
-				image_url = java.net.URLEncoder.encode(image_url, "utf-8");
-			} catch (UnsupportedEncodingException e) { // TODO Auto-generated
-														// catch block
-				e.printStackTrace();
+				try {
+					image_url = java.net.URLEncoder.encode(image_url, "utf-8");
+				} catch (UnsupportedEncodingException e) { // TODO
+															// Auto-generated
+															// catch block
+					e.printStackTrace();
+				}
+
+				json += "{\"title\":\""
+						+ title
+						+ "\",\"url\":\"http://www.mnchao.com/"
+						+ url
+						+ "_%1$s.html\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/"
+						+ image_url + "!new\"},";
 			}
-
-			json += "{\"title\":\"" + title
-					+ "\",\"url\":\"http://www.mnchao.com/" + url
-					+ "_%1$s.html\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/"
-					+ image_url + "!new\"},";
 		}
 	}
 }

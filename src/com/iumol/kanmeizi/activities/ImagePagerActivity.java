@@ -10,6 +10,7 @@ import com.iumol.kanmeizi.runnables.DownloadDataRunnable;
 import com.iumol.kanmeizi.runnables.SaveImageRunnable;
 import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
 import com.iumol.kanmeizi.util.StringUtils;
+import com.iumol.kanmeizi.util.SystemUtils;
 import com.iumol.kanmeizi.util.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -225,15 +226,18 @@ public class ImagePagerActivity extends BaseActivity implements
 
 	private void loadingData() {
 		// TODO 下拉获取数据
-		if (Isloading())
-			return;
-		else
-			Setloading(true);
 
-		DownloadDataRunnable getlistitem = new DownloadDataRunnable(mHandler,
-				iniUrl);
-		new Thread(getlistitem).start();
-
+		if (SystemUtils.isNetWorkConnect(this)) {
+			if (Isloading())
+				return;
+			else
+				Setloading(true);
+			DownloadDataRunnable getlistitem = new DownloadDataRunnable(
+					mHandler, iniUrl);
+			new Thread(getlistitem).start();
+		} else {
+			ToastUtils.show(this, "网络连接错误！");
+		}
 	}
 
 	private void initHandler() {

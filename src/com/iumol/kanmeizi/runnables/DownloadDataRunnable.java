@@ -39,6 +39,15 @@ public class DownloadDataRunnable implements Runnable {
 				if (!RegexMNCImageUrl(url, HttpUtils.httpGetString(url)))
 					break;
 			}
+		} else if (mUrl.indexOf("weibo.com/") > 0) {
+
+			RegexWBImageUrl(mUrl, HttpUtils.httpGetString(mUrl));
+
+		} else if (mUrl.indexOf("weimei58.com/") > 0) {
+			mUrl = mUrl.replace("&amp;", "&");
+			String html = HttpUtils.httpGetStringPcAgent(mUrl);
+			Regex58ImageUrl(mUrl, html);
+
 		} else {
 			for (int i = 1; i <= 20; i++) {
 				String url = mUrl + "/" + i;
@@ -54,26 +63,65 @@ public class DownloadDataRunnable implements Runnable {
 
 		String reg = "src=\".*?upaiyun.com/(.*?)\".*?alt=";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(str);
-		while (m.find()) {
-			String image_url = m.group(1);
-			try {
-				image_url = java.net.URLEncoder.encode(image_url, "utf-8");
-			} catch (UnsupportedEncodingException e) { // TODO Auto-generated
-														// catch block
-				e.printStackTrace();
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				try {
+					image_url = java.net.URLEncoder.encode(image_url, "utf-8");
+				} catch (UnsupportedEncodingException e) { // TODO
+															// Auto-generated
+															// catch block
+					e.printStackTrace();
+				}
+				// 重复抓取
+				String json;
+				if (preImageUrl.equals(image_url))
+					return false;
+				preImageUrl = image_url;
+				json = "{\"url\":\"" + url
+						+ "\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/"
+						+ image_url + "\"}";
+				AddAdapterData(json);
 			}
-			// 重复抓取
-			String json;
-			if (preImageUrl.equals(image_url))
-				return false;
-			preImageUrl = image_url;
-			json = "{\"url\":\"" + url + "\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/" + image_url
-					+ "\"}";
-			AddAdapterData(json);
 		}
 
 		return true;
+	}
+
+	public void RegexWBImageUrl(String url, String str) {
+
+		String reg = "action-data=\"imgsrc=(.*?)\"";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				String json;
+				json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
+						+ "\"}";
+				AddAdapterData(json);
+			}
+		}
+
+	}
+
+	public void Regex58ImageUrl(String url, String str) {
+
+		String reg = "zoomfile=\"(.*?)\"";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				String json;
+				json = "{\"url\":\"" + url
+						+ "\",\"image_url\":\"http://www.weimei58.com/"
+						+ image_url + "\"}";
+				AddAdapterData(json);
+			}
+		}
+
 	}
 
 	// 从分类获取图片List
@@ -81,17 +129,19 @@ public class DownloadDataRunnable implements Runnable {
 
 		String reg = "single-post-content.*?src=\"(.*?)\".*?alt";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(str);
-		while (m.find()) {
-			String image_url = m.group(1);
-			// 重复抓取
-			String json;
-			if (preImageUrl.equals(image_url))
-				return false;
-			preImageUrl = image_url;
-			json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
-					+ "\"}";
-			AddAdapterData(json);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				// 重复抓取
+				String json;
+				if (preImageUrl.equals(image_url))
+					return false;
+				preImageUrl = image_url;
+				json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
+						+ "\"}";
+				AddAdapterData(json);
+			}
 		}
 
 		return true;
