@@ -4,6 +4,7 @@ import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.bitmap.core.FinalBitmap;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.util.StringUtils;
+import com.iumol.kanmeizi.util.SystemUtils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 
 	private final LayoutInflater mLayoutInflater;
+	private Context mContext;
 
 	static class ViewHolder {
 		ImageView imageview;
@@ -35,7 +37,7 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 	public SampleAdapter(final Context context) {
 		super(context, 0);
 		mLayoutInflater = LayoutInflater.from(context);
-
+		mContext = context;
 	}
 
 	@Override
@@ -66,10 +68,21 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 				bm = FinalBitmap.mImageCache.getBitmapFromDiskCache(url);
 				Log.d("SampleAdapter", "get bitmap from DiskCache " + url);
 			}
+			float width = SystemUtils.getScreenWidth(mContext);
+			float bw = bm.getWidth();
+			if (width > bw) {
+				float scale = width / bw;
+				Matrix matrix = new Matrix();
+				matrix.postScale(scale, scale); // 长和宽放大缩小的比例
+				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+						bm.getHeight(), matrix, true);
+			}
 			vh.imageview.setImageBitmap(bm);
 		}
 		if (!StringUtils.isBlank(title))
 			vh.titleview.setText(title);
+		int n = vh.imageview.getHeight();
+		n = 0;
 		return convertView;
 	}
 	/*
