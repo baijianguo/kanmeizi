@@ -115,20 +115,26 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
+			int start = (page - 1) * 15;
+			int end = page * 15;
+			int current = 0;
 			while (m.find()) {
-				String url = m.group(1);
-				String image_url = m.group(2);
-				String title = m.group(3);
-				try {
-					title = new String(title.getBytes("utf8"), "gbk");
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (current >= start && end > current) {
+					String url = m.group(1);
+					String image_url = m.group(2);
+					String title = m.group(3);
+					try {
+						title = new String(title.getBytes("utf8"), "gbk");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (!image_url.contains(img1) && !image_url.contains(img2)) {
+						json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+								+ "\",\"image_url\":\"" + image_url + "\"},";
+					}
 				}
-				if (!image_url.contains(img1) && !image_url.contains(img2)) {
-					json += "{\"title\":\"" + title + "\",\"url\":\"" + url
-							+ "\",\"image_url\":\"" + image_url + "\"},";
-				}
+				current++;
 			}
 		}
 	}
