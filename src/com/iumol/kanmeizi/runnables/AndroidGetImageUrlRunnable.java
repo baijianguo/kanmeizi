@@ -85,7 +85,8 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 	// 从分类获取图片List
 	public void RegexUrlIndex(String str) {
-
+		// http://mm.taobao.com/tstar/search/tstar_model.do?_input_charset=utf-8&pageSize=100&currentPage=2
+		// "avatarUrl\":\"(.*?)\".*?\"realName\":\"(.*?)\".*?userId\":(.*?),\"";
 		String reg = "post-title-link.*?href=\"(.*?)\".*?>(.*?)</a></h2></div>.*?post-content.*?src=\"(.*?)\".*?/>";
 		String re = "\\[([^\\]]+)\\]";
 		// String str = "[您好]，abcdefg，[abc]";
