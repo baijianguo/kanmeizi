@@ -85,8 +85,7 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 	// 从分类获取图片List
 	public void RegexUrlIndex(String str) {
-		// http://mm.taobao.com/tstar/search/tstar_model.do?_input_charset=utf-8&pageSize=100&currentPage=2
-		// "avatarUrl\":\"(.*?)\".*?\"realName\":\"(.*?)\".*?userId\":(.*?),\"";
+
 		String reg = "post-title-link.*?href=\"(.*?)\".*?>(.*?)</a></h2></div>.*?post-content.*?src=\"(.*?)\".*?/>";
 		String re = "\\[([^\\]]+)\\]";
 		// String str = "[您好]，abcdefg，[abc]";
@@ -110,25 +109,35 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 	// 从分类获取图片List
 	public void RegexTaobaoIndex(String str) {
-
+		// http://www.fanxiaohua.com:8080/parse4/GirlVTwoAction_getphoto?tag=%E5%B0%8F%E6%B8%85%E6%96%B0&page=0
+		// http://mm.taobao.com/tstar/search/tstar_model.do?_input_charset=utf-8&pageSize=100&currentPage=2
+		// "avatarUrl\":\"(.*?)\".*?\"realName\":\"(.*?)\".*?userId\":(.*?),\"";
 		String reg = "pro-item posr.*?\n.*?href=\"(.*?)\">\n.*?data-ks-lazyload=\"(.*?)\">\n.*?\n.*?\n.*?intro-content\">(.*?)</p>";
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
+			int start = (page - 1) * 15;
+			int end = page * 15;
+			int current = 0;
 			while (m.find()) {
-				String url = m.group(1);
-				String image_url = m.group(2);
-				String title = m.group(3);
-				try {
-					title = new String(title.getBytes("utf8"), "gbk");
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (current >= start && end > current) {
+					String url = m.group(1);
+					String image_url = m.group(2);
+					String title = m.group(3);
+					try {
+
+						title = java.net.URLEncoder.encode(title, "UTF-8");
+
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (!image_url.contains(img1) && !image_url.contains(img2)) {
+						json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+								+ "\",\"image_url\":\"" + image_url + "\"},";
+					}
 				}
-				if (!image_url.contains(img1) && !image_url.contains(img2)) {
-					json += "{\"title\":\"" + title + "\",\"url\":\"" + url
-							+ "\",\"image_url\":\"" + image_url + "\"},";
-				}
+				current++;
 			}
 		}
 	}
