@@ -64,6 +64,9 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 				url = mUrl + page;
 				String strHtml = HttpUtils.httpGetStringPcAgent(url);
 				Regex58Index(strHtml);
+			} else if (mUrl.indexOf("taobao.com/") > 0) {
+				String strHtml = HttpUtils.httpGetStringPcAgent(mUrl);
+				RegexTaobaoIndex(strHtml);
 			} else {
 				url = mUrl + page;
 				String strHtml = HttpGet(url);
@@ -101,6 +104,34 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		}
 	}
 
+	String img1 = "TB11USwGXXXXXbSXFXXBaku.pXX-238-239.png";
+	String img2 = "TB1Ui9xGXXXXXaJXFXXBaku.pXX-238-239.png";
+
+	// 从分类获取图片List
+	public void RegexTaobaoIndex(String str) {
+
+		String reg = "pro-item posr.*?\n.*?href=\"(.*?)\">\n.*?data-ks-lazyload=\"(.*?)\">\n.*?\n.*?\n.*?intro-content\">(.*?)</p>";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String url = m.group(1);
+				String image_url = m.group(2);
+				String title = m.group(3);
+				try {
+					title = new String(title.getBytes("utf8"), "gbk");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (!image_url.contains(img1) && !image_url.contains(img2)) {
+					json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+							+ "\",\"image_url\":\"" + image_url + "\"},";
+				}
+			}
+		}
+	}
+
 	public void Regex58Index(String str) {
 
 		String reg = "c cl.*?\n.*?href=\"(.*?)\".*?title=\"(.*?)\".*?\n.*?src=\"(.*?)\"";
@@ -112,7 +143,8 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 				String title = m.group(2);
 				String image_url = m.group(3);
 				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
-						+ "\",\"image_url\":\"http://www.weimei58.com/" + image_url + "\"},";
+						+ "\",\"image_url\":\"http://www.weimei58.com/"
+						+ image_url + "\"},";
 			}
 
 		}
