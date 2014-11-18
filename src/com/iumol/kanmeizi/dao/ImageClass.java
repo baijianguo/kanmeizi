@@ -4,31 +4,31 @@ import com.iumol.kanmeizi.R;
 
 public class ImageClass {
 
-	public static String[][] MztImageInfo = { { "图片导航", "" },
-			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
+	public static String[][] MztImageInfo = {
+			{ "图片导航", "" },
 
-			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
 			{ "微博美女", "http://vgirl.weibo.com/area.php?page=" },
-			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" },
-			{ "魅力街拍", "http://www.weimei58.com/forum.php?mod=forumdisplay&fid=161&page=" },
-			{ "小清新", "http://www.mzitu.com/mm/page/" },
-			{ "萌妹子", "http://www.mnchao.com/mmz_%1$s.html" },
+			{ "魅力街拍",
+					"http://www.weimei58.com/forum.php?mod=forumdisplay&fid=161&page=" },
+			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
+			{ "图秀美女", "http://vgirl.weibo.com/5show/aixiu.php?page=" },
+			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
 			{ "网络美女", "http://www.mnchao.com/wlmn_%1$s.html" },
 			{ "清纯校花", "http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/" },
-			{ "图秀美女", "http://vgirl.weibo.com/5show/aixiu.php?page=" },
-			{ "台湾美女", "http://www.mzitu.com/taiwan/page/" },
-			{ "丝袜模特", "http://www.mzitu.com/model/page/" },
-			{ "日本系列", "http://www.mzitu.com/japan/page/" } };
-	public static int[] imageDrawable = { R.drawable.gengduo,
-			R.drawable.douban, R.drawable.xingan, R.drawable.weibo,
-			R.drawable.zipai,R.drawable.jiepai, R.drawable.xiaoqingxin, R.drawable.mengmeizi,
-			R.drawable.wangluo, R.drawable.xiaohua, R.drawable.yougou,
-			R.drawable.taiwan, R.drawable.mote, R.drawable.riben };
+			{ "小清新", "http://www.mzitu.com/mm/page/" },
+			{ "萌妹子", "http://www.mnchao.com/mmz_%1$s.html" },
+			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" } };
+	public static int[] imageDrawable = { R.drawable.gengduo, R.drawable.weibo,
+			R.drawable.jiepai, R.drawable.douban, R.drawable.bijini,
+			R.drawable.yougou, R.drawable.wangluo, R.drawable.xiaohua,
+			R.drawable.xiaoqingxin, R.drawable.mengmeizi, R.drawable.zipai };
 
-	public static String[] MenuImageTitle = { "湿身诱惑", "美臀系列", "丝袜美腿", "魅力模特",
-			"性感美女", "ROSI咪咪", "有沟必火", "关于我们" };
+	public static String[] MenuImageTitle = { "台湾美女", "日本系列", "湿身诱惑", "美臀系列",
+			"丝袜美腿", "魅力模特", "性感美女", "ROSI咪咪", "有沟必火", "关于我们" };
 	public static String[] MenuImageUrl = {
-			"http://www.mzitu.com/tag/%E6%B9%BF%E8%BA%AB/page/",
+			"http://www.mzitu.com/taiwan/page/",
+			"http://www.mzitu.com/japan/page/",
+			"http://www.mzitu.com/model/page/",
 			"http://www.mzitu.com/tag/%E7%BE%8E%E8%87%80/page/",
 			"http://www.mnchao.com/swmt_%1$s.html",
 			"http://www.mnchao.com/mlmt_%1$s.html",

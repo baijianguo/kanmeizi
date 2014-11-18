@@ -69,9 +69,13 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 				Log.d("SampleAdapter", "get bitmap from DiskCache " + url);
 			}
 			float width = SystemUtils.getScreenWidth(mContext);
+			float column_count = mContext.getResources().getInteger(
+					R.integer.column_count);
+
+			float request_width = width / column_count;
 			float bw = bm.getWidth();
-			if (width > bw) {
-				float scale = width / bw;
+			if (request_width > (bw - 10)) {
+				float scale = request_width / bw;
 				Matrix matrix = new Matrix();
 				matrix.postScale(scale, scale); // 长和宽放大缩小的比例
 				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
@@ -81,8 +85,7 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 		}
 		if (!StringUtils.isBlank(title))
 			vh.titleview.setText(title);
-		int n = vh.imageview.getHeight();
-		n = 0;
+
 		return convertView;
 	}
 	/*

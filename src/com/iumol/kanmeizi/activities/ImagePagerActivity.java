@@ -12,6 +12,7 @@ import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
 import com.iumol.kanmeizi.util.StringUtils;
 import com.iumol.kanmeizi.util.SystemUtils;
 import com.iumol.kanmeizi.util.ToastUtils;
+import com.iumol.kanmeizi.view.ViewPagerFixed;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -26,7 +27,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -41,7 +41,7 @@ import android.widget.TextView;
 public class ImagePagerActivity extends BaseActivity implements
 		OnPageChangeListener {
 
-	private ViewPager mViewPager = null;
+	private ViewPagerFixed mViewPager = null;
 	private SamplePagerAdapter pagerAdapter = null;
 	DisplayImageOptions options;
 	private Handler mHandler = null;
@@ -85,7 +85,7 @@ public class ImagePagerActivity extends BaseActivity implements
 		});
 
 		list_url = new LinkedList<MzituUrl>();
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager = (ViewPagerFixed) findViewById(R.id.pager);
 		pagerAdapter = new SamplePagerAdapter();
 		mViewPager.setAdapter(pagerAdapter);
 
