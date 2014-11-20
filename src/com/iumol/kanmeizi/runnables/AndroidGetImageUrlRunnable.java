@@ -121,14 +121,6 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 				String title = m.group(2);
 				String image_url = m.group(3);
 
-				try {
-					title = java.net.URLEncoder.encode(title, "UTF-8");
-
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 				json += "{\"title\":\""
 						+ title
 						+ "\",\"url\":\"http://www.iumol.com/imagedetial.php?id="
