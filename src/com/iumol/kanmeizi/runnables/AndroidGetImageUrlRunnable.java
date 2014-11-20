@@ -64,8 +64,9 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 				url = mUrl + page;
 				String strHtml = HttpUtils.httpGetStringPcAgent(url);
 				Regex58Index(strHtml);
-			} else if (mUrl.indexOf("taobao.com/") > 0) {
-				String strHtml = HttpUtils.httpGetStringPcAgent(mUrl);
+			} else if (mUrl.indexOf("iumol.com/") > 0) {
+				url = mUrl + page;
+				String strHtml = HttpUtils.httpGetString(url);
 				RegexTaobaoIndex(strHtml);
 			} else {
 				url = mUrl + page;
@@ -109,34 +110,30 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 
 	// 从分类获取图片List
 	public void RegexTaobaoIndex(String str) {
-		// http://www.fanxiaohua.com:8080/parse4/GirlVTwoAction_getphoto?tag=%E5%B0%8F%E6%B8%85%E6%96%B0&page=0
-		// http://mm.taobao.com/tstar/search/tstar_model.do?_input_charset=utf-8&pageSize=100&currentPage=2
-		// "avatarUrl\":\"(.*?)\".*?\"realName\":\"(.*?)\".*?userId\":(.*?),\"";
-		String reg = "pro-item posr.*?\n.*?href=\"(.*?)\">\n.*?data-ks-lazyload=\"(.*?)\">\n.*?\n.*?\n.*?intro-content\">(.*?)</p>";
+		String reg = "id\":\"(.*?)\",\"title\":\"(.*?)\",\"thum\":\"(.*?)\"";
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
-			int start = (page - 1) * 15;
-			int end = page * 15;
-			int current = 0;
-			while (m.find()) {
-				if (current >= start && end > current) {
-					String url = m.group(1);
-					String image_url = m.group(2);
-					String title = m.group(3);
-					try {
-						title = java.net.URLEncoder.encode(title, "UTF-8");
 
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (!image_url.contains(img1) && !image_url.contains(img2)) {
-						json += "{\"title\":\"" + title + "\",\"url\":\"" + url
-								+ "\",\"image_url\":\"" + image_url + "\"},";
-					}
+			while (m.find()) {
+
+				String id = m.group(1);
+				String title = m.group(2);
+				String image_url = m.group(3);
+
+				try {
+					title = java.net.URLEncoder.encode(title, "UTF-8");
+
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				current++;
+
+				json += "{\"title\":\""
+						+ title
+						+ "\",\"url\":\"http://www.iumol.com/imagedetial.php?id="
+						+ id + "\",\"image_url\":\"" + image_url + "\"},";
+
 			}
 		}
 	}

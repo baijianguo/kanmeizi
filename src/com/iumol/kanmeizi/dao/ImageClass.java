@@ -8,7 +8,7 @@ public class ImageClass {
 			{ "Õº∆¨µº∫Ω", "" },
 
 			{ "Œ¢≤©√¿≈Æ", "http://vgirl.weibo.com/area.php?page=" },
-			{ "Ã‘±¶≈Æ¿…", "http://www.taobao.com/market/mm/tnlmmt.php" },
+			{ "Ã‘±¶≈Æ¿…", "http://www.iumol.com/imagelist.php?page=" },
 			{ "∂π∞Í√√◊”", "http://www.dbmeizi.com/?p=%1$s" },
 			{ "˜»¡¶Ω÷≈ƒ",
 					"http://www.weimei58.com/forum.php?mod=forumdisplay&fid=161&page=" },

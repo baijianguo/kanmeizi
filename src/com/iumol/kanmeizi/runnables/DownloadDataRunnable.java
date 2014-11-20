@@ -48,9 +48,9 @@ public class DownloadDataRunnable implements Runnable {
 			String html = HttpUtils.httpGetStringPcAgent(mUrl);
 			Regex58ImageUrl(mUrl, html);
 
-		} else if (mUrl.indexOf("taobao.com/") > 0) {
+		} else if (mUrl.indexOf("iumol.com/") > 0) {
 			// mUrl = mUrl.replace("&amp;", "&");
-			String html = HttpUtils.httpGetStringPcAgent(mUrl);
+			String html = HttpUtils.httpGetString(mUrl);
 			RegexTaobaoImageUrl(mUrl, html);
 
 		} else {
@@ -113,7 +113,7 @@ public class DownloadDataRunnable implements Runnable {
 
 	public void RegexTaobaoImageUrl(String url, String str) {
 
-		String reg = "http://img.taobaocdn.com/imgextra/(.*?).jpg";
+		String reg = "image\":\"(.*?)\"";
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
@@ -121,7 +121,7 @@ public class DownloadDataRunnable implements Runnable {
 				String image_url = m.group(1);
 				String json;
 				json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
-						+ ".jpg\"}";
+						+ "\"}";
 				AddAdapterData(json);
 			}
 		}

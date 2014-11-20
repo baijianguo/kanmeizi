@@ -108,6 +108,7 @@ public class ImagePagerActivity extends BaseActivity implements
 		}
 		mViewPager.setOnPageChangeListener(this);
 		mViewPager.setCurrentItem(mCurrentItem);
+		mViewPager.setOffscreenPageLimit(5);
 
 	}
 
