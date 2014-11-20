@@ -125,7 +125,6 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 					String image_url = m.group(2);
 					String title = m.group(3);
 					try {
-
 						title = java.net.URLEncoder.encode(title, "UTF-8");
 
 					} catch (UnsupportedEncodingException e) {
