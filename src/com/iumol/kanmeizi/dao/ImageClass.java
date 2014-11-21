@@ -7,10 +7,10 @@ public class ImageClass {
 	public static String[][] MztImageInfo = {
 			{ "图片导航", "" },
 
-			{ "淘宝女郎", "http://www.iumol.com/imagelist.php?page=" },
+			{ "淘宝女郎", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
 			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
-			{ "微博美女", "http://vgirl.weibo.com/area.php?page=" },
-			{ "图秀美女", "http://vgirl.weibo.com/5show/aixiu.php?page=" },
+			{ "微博美女", "http://www.iumol.com/imagelist.php?type=weibo&page=" },
+			{ "图秀美女", "http://www.iumol.com/imagelist.php?type=tuxiu&page=" },
 			{ "魅力街拍",
 					"http://www.weimei58.com/forum.php?mod=forumdisplay&fid=161&page=" },
 			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" },
