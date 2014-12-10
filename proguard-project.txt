@@ -18,3 +18,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+-keep public class com.iumol.kanmeizi.R$*{
+    public static final int *;
+}
+# 以下类过滤不混淆  
+-keep public class * extends com.umeng.**
+# 以下包不进行过滤 
+-keep class com.umeng.** { *; }
