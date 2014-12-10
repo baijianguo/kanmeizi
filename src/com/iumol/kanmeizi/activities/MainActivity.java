@@ -26,6 +26,7 @@ import java.util.List;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.MzituUrl;
+import com.iumol.kanmeizi.util.StringUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -80,9 +81,11 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
+
+		MobclickAgent.onEvent(MainActivity.this, "list_" + position);
 		MzituUrl mzt = mData.get(position);
 		if ("图片导航".equals(mzt.getTitle()))
-			openWebView();
+			openWebView(null);
 		else {
 
 			openClassActivity(mzt);
@@ -115,15 +118,17 @@ public class MainActivity extends Activity implements
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// Highlight the selected item, update the title, and close the
+				MobclickAgent.onEvent(MainActivity.this, "menu_" + position);
 				// drawer
 				if ("关于我们".equals(ImageClass.MenuImageTitle[position]))
 					openAboutView();
 
 				else {
-					MzituUrl mzt = new MzituUrl(
-							ImageClass.MenuImageTitle[position],
-							ImageClass.MenuImageUrl[position], "");
-					openClassActivity(mzt);
+					// MzituUrl mzt = new
+					// MzituUrl(ImageClass.MenuImageTitle[position],ImageClass.MenuImageUrl[position],
+					// "");
+					// openClassActivity(mzt);
+					openWebView(ImageClass.MenuImageUrl[position]);
 				}
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
@@ -137,9 +142,11 @@ public class MainActivity extends Activity implements
 		startActivity(mIntent);
 	}
 
-	public void openWebView() {
+	public void openWebView(String url) {
 
 		Intent it = new Intent(this, WebViewActivity.class);
+		if (!StringUtils.isBlank(url))
+			it.putExtra("url", url);
 		startActivity(it);
 		overridePendingTransition(android.R.anim.slide_in_left,
 				android.R.anim.slide_out_right);

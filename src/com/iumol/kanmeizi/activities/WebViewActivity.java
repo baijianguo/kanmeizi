@@ -81,6 +81,10 @@ public class WebViewActivity extends Activity implements OnClickListener,
 		mWebView = (CustomWebView) findViewById(R.id.webview);
 		initializeWebView();
 
+		Intent intent = getIntent();
+		if (null != intent.getStringExtra("url"))
+			homepage = intent.getStringExtra("url");
+
 		mProgressBar = (ProgressBar) findViewById(R.id.WebViewProgress);
 		mProgressBar.setMax(MaxWebProgress);
 

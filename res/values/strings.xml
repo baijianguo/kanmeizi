@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">看妹子</string>
+    <string name="app_desc">手机看妹子</string>
     <string name="menu_item_clear_memory_cache">清除内存缓存</string>
     <string name="menu_item_clear_disc_cache">清除磁盘缓存</string>
     <string name="menu_item_save_to_disc">保存到本地</string>
