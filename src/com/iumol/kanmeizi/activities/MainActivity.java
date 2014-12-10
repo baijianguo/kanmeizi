@@ -85,7 +85,7 @@ public class MainActivity extends Activity implements
 		MobclickAgent.onEvent(MainActivity.this, "list_" + position);
 		MzituUrl mzt = mData.get(position);
 		if ("Í¼Æ¬µ¼º½".equals(mzt.getTitle()))
-			openWebView(null);
+			openWebView(mzt.getUrl());
 		else {
 
 			openClassActivity(mzt);

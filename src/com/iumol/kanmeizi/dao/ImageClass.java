@@ -4,9 +4,9 @@ import com.iumol.kanmeizi.R;
 
 public class ImageClass {
 
-	public static String[][] MztImageInfo = { { "Õº∆¨µº∫Ω", "" },
-
-	{ "Ã‘±¶≈Æ¿…", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
+	public static String[][] MztImageInfo = {
+			{ "Õº∆¨µº∫Ω", "http://www.iumol.com" },
+			{ "Ã‘±¶≈Æ¿…", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
 			{ "∂π∞Í√√◊”", "http://www.dbmeizi.com/?p=%1$s" },
 			{ "Œ¢≤©√¿≈Æ", "http://www.iumol.com/imagelist.php?type=weibo&page=" },
 			{ "Õº–„√¿≈Æ", "http://www.iumol.com/imagelist.php?type=tuxiu&page=" },
