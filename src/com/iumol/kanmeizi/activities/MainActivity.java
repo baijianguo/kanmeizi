@@ -23,6 +23,7 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.igexin.sdk.PushManager;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.MzituUrl;
@@ -37,7 +38,7 @@ public class MainActivity extends Activity implements
 	private ListView mListView;
 	private ClassAdapter mAdapter;
 	private List<MzituUrl> mData;
-
+	private static final String MASTERSECRET = "HgZCYWI8c1616cwvkEAId1";
 	// ×ó»¬²Ëµ¥
 	private View mMenuBtn;
 	private DrawerLayout mDrawerLayout;
@@ -46,7 +47,7 @@ public class MainActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		PushManager.getInstance().initialize(this.getApplicationContext());
 		UmengUpdateAgent.update(this);
 
 		setContentView(R.layout.activity_main);

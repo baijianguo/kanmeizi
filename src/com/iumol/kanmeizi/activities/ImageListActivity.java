@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -47,6 +48,7 @@ public class ImageListActivity extends Activity implements
 	private int page = 1;
 	private Handler mHandler = null;
 	private FinalBitmap fb;
+	private View loadView;
 
 	private MzituUrl mzt;
 
@@ -80,6 +82,10 @@ public class ImageListActivity extends Activity implements
 		mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
 		mGridView.setEmptyView(findViewById(android.R.id.empty));
 
+		LayoutInflater layoutInflater = getLayoutInflater();
+		loadView = layoutInflater.inflate(R.layout.loading_view, null);
+		mGridView.addFooterView(loadView);
+
 		mData = new LinkedList<MzituUrl>();
 		// do we have saved data?
 
@@ -104,7 +110,7 @@ public class ImageListActivity extends Activity implements
 			new Thread(getlistitem).start();
 		} else {
 			ToastUtils.show(this, "ÍøÂçÁ¬½Ó´íÎó£¡");
-			
+
 		}
 
 	}
