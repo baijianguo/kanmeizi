@@ -84,6 +84,8 @@ public class WebViewActivity extends Activity implements OnClickListener,
 		Intent intent = getIntent();
 		if (null != intent.getStringExtra("url"))
 			homepage = intent.getStringExtra("url");
+		else if (intent.getData() != null)
+			homepage = intent.getDataString();
 
 		mProgressBar = (ProgressBar) findViewById(R.id.WebViewProgress);
 		mProgressBar.setMax(MaxWebProgress);
@@ -382,9 +384,9 @@ public class WebViewActivity extends Activity implements OnClickListener,
 	}
 
 	public void finishTask() {
-
+		if (AppManager.getAppManager().isOneActivity())
+			startActivity(new Intent(this, MainActivity.class));
 		this.finish();
-
 	}
 
 	private void LoadUrl(String url) {

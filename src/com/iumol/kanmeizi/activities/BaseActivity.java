@@ -1,9 +1,9 @@
 package com.iumol.kanmeizi.activities;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.iumol.kanmeizi.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -18,6 +18,22 @@ public abstract class BaseActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 		return true;
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// 添加Activity到堆栈
+		AppManager.getAppManager().addActivity(this);
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// 结束Activity&从堆栈中移除
+		AppManager.getAppManager().finishActivity(this);
 	}
 
 	@Override
