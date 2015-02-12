@@ -2,13 +2,11 @@ package com.iumol.kanmeizi.activities;
 
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.util.SystemUtils;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class WelcomeActivity extends Activity implements Runnable {
+public class WelcomeActivity extends BaseActivity implements Runnable {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

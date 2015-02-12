@@ -41,7 +41,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class WebViewActivity extends Activity implements OnClickListener,
+public class WebViewActivity extends BaseActivity implements OnClickListener,
 		OnTouchListener {
 
 	private CustomWebView mWebView = null;

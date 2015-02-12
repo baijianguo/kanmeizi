@@ -1,24 +1,15 @@
 package com.iumol.kanmeizi.activities;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import com.iumol.kanmeizi.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  */
 public abstract class BaseActivity extends Activity {
-
-	protected ImageLoader imageLoader = ImageLoader.getInstance();
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_menu, menu);
-		return true;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +28,16 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.item_clear_memory_cache:
-			imageLoader.clearMemoryCache();
-			return true;
-		case R.id.item_clear_disc_cache:
-			imageLoader.clearDiscCache();
-			return true;
-		default:
-			return false;
-		}
+	public void startActivity(Intent intent) {
+		// TODO Auto-generated method stub
+		super.startActivity(intent);
+		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+	}
+
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 }

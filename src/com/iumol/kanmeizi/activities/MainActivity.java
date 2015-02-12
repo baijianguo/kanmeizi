@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -32,7 +33,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity implements
+public class MainActivity extends BaseActivity implements
 		AbsListView.OnItemClickListener {
 
 	private ListView mListView;
@@ -71,7 +72,7 @@ public class MainActivity extends Activity implements
 
 		// do we have saved data?
 		initMzituList();
-		mAdapter = new ClassAdapter(this, ImageClass.imageDrawable);
+		mAdapter = new ClassAdapter(ImageClass.imageDrawable);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 
@@ -149,8 +150,6 @@ public class MainActivity extends Activity implements
 		if (!StringUtils.isBlank(url))
 			it.putExtra("url", url);
 		startActivity(it);
-		overridePendingTransition(android.R.anim.slide_in_left,
-				android.R.anim.slide_out_right);
 	}
 
 	public void initMzituList() {
@@ -167,17 +166,16 @@ public class MainActivity extends Activity implements
 		private static final String TAG = "SampleAdapter";
 		int[] imageDrawable;
 		private final LayoutInflater mLayoutInflater;
-		private Context mContext = null;
 
 		final class ViewHolder {
 			ImageView imageview;
 			TextView textview;
 		}
 
-		public ClassAdapter(final Context context, int[] imageDrawable) {
+		public ClassAdapter(int[] imageDrawable) {
 
-			mLayoutInflater = LayoutInflater.from(context);
-			mContext = context;
+			mLayoutInflater = LayoutInflater.from(MainActivity.this);
+
 			this.imageDrawable = imageDrawable;
 		}
 
@@ -205,9 +203,11 @@ public class MainActivity extends Activity implements
 			 * SystemUtils.getScreenWidth(mContext), 0);
 			 * vh.imageview.setImageBitmap(bmp);
 			 */
-			vh.imageview.setImageDrawable(mContext.getResources().getDrawable(
-					imageDrawable[position]));
-			vh.textview.setText(mData.get(position).getTitle());
+			Drawable drawable = getResources().getDrawable(
+					imageDrawable[position]);
+			vh.imageview.setImageDrawable(drawable);
+			String title = mData.get(position).getTitle();
+			vh.textview.setText(title);
 			return convertView;
 		}
 

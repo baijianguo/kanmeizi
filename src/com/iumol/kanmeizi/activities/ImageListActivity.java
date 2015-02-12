@@ -34,7 +34,7 @@ import com.iumol.kanmeizi.bitmap.core.FinalBitmap;
 import com.umeng.analytics.MobclickAgent;
 
 @SuppressLint({ "NewApi", "CutPasteId" })
-public class ImageListActivity extends Activity implements
+public class ImageListActivity extends BaseActivity implements
 		AbsListView.OnItemClickListener, AbsListView.OnScrollListener,
 		ImageLoadCompleteListener {
 

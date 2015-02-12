@@ -14,6 +14,7 @@ import com.iumol.kanmeizi.util.SystemUtils;
 import com.iumol.kanmeizi.util.ToastUtils;
 import com.iumol.kanmeizi.view.ViewPagerFixed;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -29,6 +30,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class ImagePagerActivity extends BaseActivity implements
 	private boolean isloading = false;
 	private LinkedList<MzituUrl> list_url;
 	private MzituUrl mzt = null;
-
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	String iniUrl = "";
 	int current_index = 0;
 
@@ -286,6 +288,26 @@ public class ImagePagerActivity extends BaseActivity implements
 
 	}
 
+	private void SaveBitmap() {
+		// TODO Auto-generated method stub
+
+		String url = pagerAdapter.getPostionUrl(current_index);
+		File file = (imageLoader.getDiskCache()).get(url);
+
+		if (null != file) {
+			SaveImageRunnable sbr = new SaveImageRunnable(url, file.getPath());
+			new Thread(sbr).start();
+			ToastUtils.show(this, "已保存到 kanmeizi/images/");
+		}
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+		return true;
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -301,19 +323,5 @@ public class ImagePagerActivity extends BaseActivity implements
 		default:
 			return false;
 		}
-	}
-
-	private void SaveBitmap() {
-		// TODO Auto-generated method stub
-
-		String url = pagerAdapter.getPostionUrl(current_index);
-		File file = (imageLoader.getDiskCache()).get(url);
-
-		if (null != file) {
-			SaveImageRunnable sbr = new SaveImageRunnable(url, file.getPath());
-			new Thread(sbr).start();
-			ToastUtils.show(this, "已保存到 kanmeizi/images/");
-		}
-
 	}
 }

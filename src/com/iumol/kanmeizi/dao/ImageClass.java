@@ -8,15 +8,15 @@ public class ImageClass {
 			{ "图片导航", "http://www.iumol.com" },
 			{ "淘宝女郎", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
 			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
-			{ "微博美女", "http://www.iumol.com/imagelist.php?type=weibo&page=" },
-			{ "图秀美女", "http://www.iumol.com/imagelist.php?type=tuxiu&page=" },
-			{ "魅力街拍", "http://www.iumol.com/imagelist.php?type=jiepai&page=" },
 			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" },
 			{ "网络美女", "http://www.mnchao.com/wlmn_%1$s.html" },
 			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
 			{ "清纯校花", "http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/" },
 			{ "丝袜美腿", "http://www.mnchao.com/swmt_%1$s.html" },
 			{ "ROSI咪咪", "http://www.mzitu.com/tag/rosi/page/" },
+			{ "魅力街拍", "http://www.iumol.com/imagelist.php?type=jiepai&page=" },
+			{ "微博美女", "http://www.iumol.com/imagelist.php?type=weibo&page=" },
+			{ "图秀美女", "http://www.iumol.com/imagelist.php?type=tuxiu&page=" },
 
 	/*
 	 * { "小清新", "http://www.mzitu.com/mm/page/" }, { "萌妹子",
@@ -24,10 +24,10 @@ public class ImageClass {
 	 */};
 
 	public static int[] imageDrawable = { R.drawable.gengduo,
-			R.drawable.taonvlang, R.drawable.douban, R.drawable.weibo,
-			R.drawable.bijini, R.drawable.jiepai, R.drawable.zipai,
+			R.drawable.taonvlang, R.drawable.douban, R.drawable.zipai,
 			R.drawable.wangluo, R.drawable.yougou, R.drawable.xiaohua,
-			R.drawable.meitun, R.drawable.rosi /*
+			R.drawable.meitun, R.drawable.rosi, R.drawable.jiepai,
+			R.drawable.weibo, R.drawable.bijini /*
 												 * , R.drawable.xiaoqingxin,
 												 * R.drawable.mengmeizi
 												 */};
@@ -39,7 +39,7 @@ public class ImageClass {
 											 */"热门游戏", "两性话题", "情趣商城", "关于我们" };
 	public static String[] MenuImageUrl = {
 
-	"http://kkxyx.com/", "http://m.sohu.com/cl/85/?v=3",
+	"http://yx.huosu.com/yx/index", "http://m.sohu.com/cl/85/?v=3",
 			"http://wap.chunshuitang.com"
 	/*
 	 * "http://www.mzitu.com/taiwan/page/", "http://www.mzitu.com/japan/page/",
