@@ -39,7 +39,7 @@ public class ImageClass {
 											 */"热门游戏", "两性话题", "情趣商城", "关于我们" };
 	public static String[] MenuImageUrl = {
 
-	"http://yx.huosu.com/yx/index", "http://m.sohu.com/cl/85/?v=3",
+	"http://yx.huosu.com/yx/index", "http://m.sifangsex.com",
 			"http://wap.chunshuitang.com"
 	/*
 	 * "http://www.mzitu.com/taiwan/page/", "http://www.mzitu.com/japan/page/",
