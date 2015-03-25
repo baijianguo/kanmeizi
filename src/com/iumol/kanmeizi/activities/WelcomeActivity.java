@@ -4,6 +4,7 @@ import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.util.SystemUtils;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class WelcomeActivity extends BaseActivity implements Runnable {
@@ -19,18 +20,18 @@ public class WelcomeActivity extends BaseActivity implements Runnable {
 		auth_view.setText(auth);
 
 		if (1 != getIntent().getFlags())
-			new Thread(this).start();
+			auth_view.postDelayed(new Thread(this), 1200);
 	}
 
 	public void run() {
-		try {
+		toMainActivity();
+	}
 
-			Thread.sleep(1200);
-			startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-			finish();
+	public void toMainActivity() {
 
-		} catch (InterruptedException e) {
+		Intent mIntent = new Intent(this, MainActivity.class);
+		startActivity(mIntent);
+		finish();
 
-		}
 	}
 }
