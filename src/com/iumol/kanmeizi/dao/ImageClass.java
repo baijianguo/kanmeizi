@@ -8,7 +8,7 @@ public class ImageClass {
 			{ "图片导航", "http://www.iumol.com" },
 			{ "淘宝女郎", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
 			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
-			{ "美女自拍", "http://www.mzitu.com/tag/%E8%87%AA%E6%8B%8D/page/" },
+			{ "美女自拍", "http://www.mzitu.com/mm/page/" },
 			{ "网络美女", "http://www.mnchao.com/wlmn_%1$s.html" },
 			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
 			{ "清纯校花", "http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/" },

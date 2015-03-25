@@ -26,6 +26,13 @@ public class DownloadDataRunnable implements Runnable {
 		mUrl = url;
 	}
 
+	private String httpGetString(String url) {
+		if (mHandler != null)
+			return HttpUtils.httpGetString(url);
+		else
+			return null;
+	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -36,12 +43,12 @@ public class DownloadDataRunnable implements Runnable {
 		if (mUrl.indexOf("mnchao.com/") > 0) {
 			for (int i = 1; i <= 10; i++) {
 				String url = String.format(mUrl, i);
-				if (!RegexMNCImageUrl(url, HttpUtils.httpGetString(url)))
+				if (!RegexMNCImageUrl(url, httpGetString(url)))
 					break;
 			}
 		} else if (mUrl.indexOf("weibo.com/") > 0) {
 
-			RegexWBImageUrl(mUrl, HttpUtils.httpGetString(mUrl));
+			RegexWBImageUrl(mUrl, httpGetString(mUrl));
 
 		} else if (mUrl.indexOf("weimei58.com/") > 0) {
 			mUrl = mUrl.replace("&amp;", "&");
@@ -50,13 +57,13 @@ public class DownloadDataRunnable implements Runnable {
 
 		} else if (mUrl.indexOf("iumol.com/") > 0) {
 			// mUrl = mUrl.replace("&amp;", "&");
-			String html = HttpUtils.httpGetString(mUrl);
+			String html = httpGetString(mUrl);
 			RegexTaobaoImageUrl(mUrl, html);
 
 		} else {
 			for (int i = 1; i <= 20; i++) {
 				String url = mUrl + "/" + i;
-				if (!RegexImageUrl(url, HttpUtils.httpGetString(url)))
+				if (!RegexImageUrl(url, httpGetString(url)))
 					break;
 			}
 		}
