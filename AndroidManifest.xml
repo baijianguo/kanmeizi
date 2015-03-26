@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iumol.kanmeizi"
-    android:versionCode="17"
-    android:versionName="1.1.6" >
+    android:versionCode="18"
+    android:versionName="1.1.7" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -89,7 +89,7 @@
         <!-- android:value="iumol" -->
         <meta-data
             android:name="@string/app_name"
-            android:value="kanmeizi" />
+            android:value="fir.im" />
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

@@ -4,7 +4,6 @@ import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.util.SystemUtils;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 public class WelcomeActivity extends BaseActivity implements Runnable {
