@@ -206,10 +206,10 @@ public class TencentX5Activity extends BaseActivity {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int which) {
-										Toast.makeText(
+										/*Toast.makeText(
 												TencentX5Activity.this,
 												"fake message: i'll download...",
-												1000).show();
+												1000).show();*/
 									}
 								})
 						.setNegativeButton("no",
@@ -219,10 +219,10 @@ public class TencentX5Activity extends BaseActivity {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										// TODO Auto-generated method stub
-										Toast.makeText(
+										/*Toast.makeText(
 												TencentX5Activity.this,
 												"fake message: refuse download...",
-												1000).show();
+												1000).show();*/
 									}
 								})
 						.setOnCancelListener(
@@ -249,11 +249,11 @@ public class TencentX5Activity extends BaseActivity {
 						public Object onMiscCallBack(String method,
 								Bundle bundle) {
 							if (method == "onSecurityLevelGot") {
-								Toast.makeText(
+								/*Toast.makeText(
 										TencentX5Activity.this,
 										"Security Level Check: \nit's level is "
 												+ bundle.getInt("level"), 1000)
-										.show();
+										.show();*/
 							}
 							return null;
 						}
