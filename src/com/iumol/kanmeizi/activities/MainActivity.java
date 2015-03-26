@@ -1,8 +1,6 @@
 package com.iumol.kanmeizi.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -29,6 +27,7 @@ import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.util.StringUtils;
+import com.iumol.kanmeizi.x5.TencentX5Activity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -146,7 +145,7 @@ public class MainActivity extends BaseActivity implements
 
 	public void openWebView(String url) {
 
-		Intent it = new Intent(this, WebViewActivity.class);
+		Intent it = new Intent(this, TencentX5Activity.class);
 		if (!StringUtils.isBlank(url))
 			it.putExtra("url", url);
 		startActivity(it);

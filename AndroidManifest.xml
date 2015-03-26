@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 自定义权限 -->
     <permission
         android:name="getui.permission.GetuiService.com.iumol.kanmeizi"
@@ -49,6 +50,21 @@
         </activity>
         <activity
             android:name="com.iumol.kanmeizi.activities.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.iumol.kanmeizi.x5.TencentX5Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask" >
@@ -191,6 +207,11 @@
                 <action android:name="com.igexin.sdk.action.08grz4uHNO9bV2nKSCepA2" />
             </intent-filter>
         </receiver>
+        <!-- x5 -->
+        <meta-data
+            android:name="QBSDKAppKey"
+            android:value="QwheSM8+jkx8CCvvWxcNegyl" >
+        </meta-data>
     </application>
 
 </manifest>

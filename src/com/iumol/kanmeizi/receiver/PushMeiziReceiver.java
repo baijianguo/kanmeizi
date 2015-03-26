@@ -10,8 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import com.igexin.sdk.PushConsts;
-import com.iumol.kanmeizi.activities.WebViewActivity;
 import com.iumol.kanmeizi.util.StringUtils;
+import com.iumol.kanmeizi.x5.TencentX5Activity;
 
 public class PushMeiziReceiver extends BroadcastReceiver {
 	@Override
@@ -45,7 +45,7 @@ public class PushMeiziReceiver extends BroadcastReceiver {
 			jsonObject = new JSONObject(data);
 			if (jsonObject != null && jsonObject.has("url")) {
 				String url = jsonObject.getString("url");
-				Intent it = new Intent(context, WebViewActivity.class);
+				Intent it = new Intent(context, TencentX5Activity.class);
 				it.setData(Uri.parse(url));
 				it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(it);
