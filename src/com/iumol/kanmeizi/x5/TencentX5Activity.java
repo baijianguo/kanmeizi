@@ -16,12 +16,12 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,8 +49,7 @@ public class TencentX5Activity extends BaseActivity {
 	private ImageButton mExit;
 	private ImageButton mHome;
 
-	private static final String TAG = "SdkDemo";
-	private static final int MAX_LENGTH = 14;
+	private static final String TAG = "TencentX5";
 	public static String homepage = "http://www.iumol.com/";
 	private ValueCallback<Uri> uploadFile;
 
@@ -119,6 +118,21 @@ public class TencentX5Activity extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				return false;
+			}
+
+			@Override
+			public WebResourceResponse shouldInterceptRequest(WebView view,
+					String url) {
+				// TODO Auto-generated method stub
+
+				if (url.contains("cpro.baidustatic.com")) {
+
+					WebResourceResponse response = new WebResourceResponse(
+							"text/xml", "utf-8", null);
+					return response;
+
+				}
+				return super.shouldInterceptRequest(view, url);
 			}
 		});
 
