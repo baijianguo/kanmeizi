@@ -40,15 +40,16 @@ public class DownloadDataRunnable implements Runnable {
 		if (StringUtils.isBlank(mUrl) || mHandler == null)
 			return;
 
-		if (mUrl.indexOf("mnchao.com/") > 0) {
-			for (int i = 1; i <= 10; i++) {
-				String url = String.format(mUrl, i);
-				if (!RegexMNCImageUrl(url, httpGetString(url)))
-					break;
-			}
+		if (mUrl.indexOf("faceks.com/") > 0) {
+			RegexFaceksImageUrl(mUrl, HttpUtils.httpGetStringPcAgent(mUrl));
+
 		} else if (mUrl.indexOf("weibo.com/") > 0) {
 
 			RegexWBImageUrl(mUrl, httpGetString(mUrl));
+
+		} else if (mUrl.indexOf("dbmeinv.com/") > 0) {
+
+			RegexDBImageUrl(mUrl, httpGetString(mUrl));
 
 		} else if (mUrl.indexOf("weimei58.com/") > 0) {
 			mUrl = mUrl.replace("&amp;", "&");
@@ -71,29 +72,18 @@ public class DownloadDataRunnable implements Runnable {
 	}
 
 	// 从分类获取图片List
-	public boolean RegexMNCImageUrl(String url, String str) {
+	public boolean RegexFaceksImageUrl(String url, String str) {
 
-		String reg = "src=\".*?upaiyun.com/(.*?)\".*?alt=";
+		String reg = "<img src=\"(.*?)\"/>";
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
 			while (m.find()) {
 				String image_url = m.group(1);
-				try {
-					image_url = java.net.URLEncoder.encode(image_url, "utf-8");
-				} catch (UnsupportedEncodingException e) { // TODO
-															// Auto-generated
-															// catch block
-					e.printStackTrace();
-				}
 				// 重复抓取
 				String json;
-				if (preImageUrl.equals(image_url))
-					return false;
-				preImageUrl = image_url;
-				json = "{\"url\":\"" + url
-						+ "\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/"
-						+ image_url + "\"}";
+				json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
+						+ "\"}";
 				AddAdapterData(json);
 			}
 		}
@@ -104,6 +94,24 @@ public class DownloadDataRunnable implements Runnable {
 	public void RegexWBImageUrl(String url, String str) {
 
 		String reg = "action-data=\"imgsrc=(.*?)\"";
+		Pattern p = Pattern.compile(reg);
+		if (!StringUtils.isBlank(str)) {
+			Matcher m = p.matcher(str);
+			while (m.find()) {
+				String image_url = m.group(1);
+				String json;
+				json = "{\"url\":\"" + url + "\",\"image_url\":\"" + image_url
+						+ "\"}";
+				AddAdapterData(json);
+			}
+		}
+
+	}
+
+	public void RegexDBImageUrl(String url, String str) {
+
+		String reg = "<div class=\"topic-figure cc\">.*?<img src=\"(.*?)\"";
+		str = str.replace("\n", "");
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
@@ -156,7 +164,7 @@ public class DownloadDataRunnable implements Runnable {
 	// 从分类获取图片List
 	public boolean RegexImageUrl(String url, String str) {
 
-		String reg = "single-post-content.*?src=\"(.*?)\".*?alt";
+		String reg = "<p><a href=\".*?\" ><img src=\"(.*?)\" alt=\".*?\" />";
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);

@@ -7,16 +7,18 @@ public class ImageClass {
 	public static String[][] MztImageInfo = {
 			{ "图片导航", "http://www.iumol.com" },
 			{ "淘宝女郎", "http://www.iumol.com/imagelist.php?type=taobao&page=" },
-			{ "豆瓣妹子", "http://www.dbmeizi.com/?p=%1$s" },
+			{ "豆瓣妹子",
+					"http://www.dbmeinv.com/dbgroup/show.htm?pager_offset=%1$s" },
 			{ "美女自拍", "http://www.mzitu.com/mm/page/" },
-			{ "网络美女", "http://www.mnchao.com/wlmn_%1$s.html" },
-			{ "清纯唯美", "http://www.mnchao.com/qcwm_%1$s.html" },
+			{ "mygirl", "http://sexy.faceks.com/tag/mygirl?page=" },
+			{ "清纯唯美", "http://www.mzitu.com/tag/tianmei/page/" },
 			{ "清纯校花", "http://www.mzitu.com/tag/%E6%A0%A1%E8%8A%B1/page/" },
-			{ "丝袜美腿", "http://www.mnchao.com/swmt_%1$s.html" },
+			{ "性感嫩模", "http://www.mzitu.com/model/page/" },
 			{ "ROSI咪咪", "http://www.mzitu.com/tag/rosi/page/" },
 			{ "魅力街拍", "http://www.iumol.com/imagelist.php?type=jiepai&page=" },
-			{ "微博美女", "http://www.iumol.com/imagelist.php?type=weibo&page=" },
-			{ "图秀美女", "http://www.iumol.com/imagelist.php?type=tuxiu&page=" },
+			{ "西美人", "http://sexy.faceks.com/tag/%E6%AC%A7%E7%BE%8E?page=" },
+			{ "美媛馆",
+					"http://sexy.faceks.com/tag/%E7%BE%8E%E5%AA%9B%E9%A6%86?page=" },
 
 	/*
 	 * { "小清新", "http://www.mzitu.com/mm/page/" }, { "萌妹子",
@@ -27,7 +29,7 @@ public class ImageClass {
 			R.drawable.taonvlang, R.drawable.douban, R.drawable.zipai,
 			R.drawable.wangluo, R.drawable.yougou, R.drawable.xiaohua,
 			R.drawable.meitun, R.drawable.rosi, R.drawable.jiepai,
-			R.drawable.weibo, R.drawable.bijini /*
+			R.drawable.bijini, R.drawable.weibo /*
 												 * , R.drawable.xiaoqingxin,
 												 * R.drawable.mengmeizi
 												 */};

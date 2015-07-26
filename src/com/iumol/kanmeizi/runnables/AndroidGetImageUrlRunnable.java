@@ -44,14 +44,14 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		String url;
 		if (!StringUtils.isBlank(mUrl)) {
 			json = "{\"count\":\"6\",\"item\":[";
-			if (mUrl.indexOf("dbmeizi.com/") > 0) {
+			if (mUrl.indexOf("dbmeinv.com/") > 0) {
 				url = String.format(mUrl, page);
 				String strHtml = HttpGet(url);
 				RegexDBImageUrl(strHtml);
-			} else if (mUrl.indexOf("mnchao.com/") > 0) {
-				url = String.format(mUrl, page);
-				String strHtml = HttpGet(url);
-				RegexMNCIndex(strHtml);
+			} else if (mUrl.indexOf("faceks.com/") > 0) {
+				url = mUrl + page;
+				String strHtml = HttpUtils.httpGetStringPcAgent(url);
+				RegexFaceksIndex(strHtml);
 			} else if (mUrl.indexOf("weibo.com/area.php") > 0) {
 				url = mUrl + page;
 				String strHtml = HttpGet(url);
@@ -87,9 +87,9 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 	// 从分类获取图片List
 	public void RegexUrlIndex(String str) {
 
-		String reg = "post-title-link.*?href=\"(.*?)\".*?>(.*?)</a></h2></div>.*?post-content.*?src=\"(.*?)\".*?/>";
+		String reg = "<figure>.*?<a href=\"(.*?)\" title=\"(.*?)\" >.*?<img.*?data-original=\"(.*?)\"";
 		String re = "\\[([^\\]]+)\\]";
-		// String str = "[您好]，abcdefg，[abc]";
+		str = str.replace("\n", "");
 		Pattern p = Pattern.compile(reg);
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
@@ -170,15 +170,17 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 	// 从分类获取图片List
 	public void RegexDBImageUrl(String str) {
 
-		String reg = "data-bigimg=\"(.*?)\".*?data-title=\"(.*?)\".*?data-url";
+		String reg = "<div class=\"img_single\">.*?<a href=\"(.*?)\" class=\"link\" target=\"_topic_detail\">.*?<img class=\"height_min\" title=\"(.*?)\".*?src=\"(.*?)\"";
 		Pattern p = Pattern.compile(reg);
+		str = str.replace("\n", "");
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
 			while (m.find()) {
-				String image_url = m.group(1);
+				String url = m.group(1);
 				String title = m.group(2);
+				String image_url = m.group(3);
 				json += "{\"title\":\"" + title + "\",\"image_url\":\""
-						+ image_url + "\"},";
+						+ image_url + "\",\"url\":\"" + url + "\"},";
 			}
 		}
 	}
@@ -209,7 +211,6 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
 			while (m.find()) {
-
 				String url = "http://vgirl.weibo.com";
 				url += m.group(1);
 				String image_url = m.group(2);
@@ -220,30 +221,21 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		}
 	}
 
-	public void RegexMNCIndex(String strHtml) {
-		String reg = "<li>.*?href=\"(.*?)\\.html\".*?title=\"(.*?)\".*?src=\".*?upaiyun.com/(.*?)!smallimg\".*?<span>";
+	public void RegexFaceksIndex(String strHtml) {
+		String reg = "<div class=\"pic\">.*?<a class=\"img\" href=\"(.*?)\">.*?<img src=\"(.*?)\" />.*?<div class=\"text\"><p>(.*?)</p>";
 		Pattern p = Pattern.compile(reg);
+		strHtml = strHtml.replace("\n", "");
+		strHtml = strHtml.replace("&nbsp;", " ");
+		strHtml = strHtml.replace("<br />", " ");
 		if (!StringUtils.isBlank(strHtml)) {
 			Matcher m = p.matcher(strHtml);
 			while (m.find()) {
 				String url = m.group(1);
-				String title = m.group(2);
-				String image_url = m.group(3);
+				String image_url = m.group(2);
+				String title = m.group(3);
 
-				try {
-					image_url = java.net.URLEncoder.encode(image_url, "utf-8");
-				} catch (UnsupportedEncodingException e) { // TODO
-															// Auto-generated
-															// catch block
-					e.printStackTrace();
-				}
-
-				json += "{\"title\":\""
-						+ title
-						+ "\",\"url\":\"http://www.mnchao.com/"
-						+ url
-						+ "_%1$s.html\",\"image_url\":\"http://meinvchao.b0.upaiyun.com/"
-						+ image_url + "!new\"},";
+				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
+						+ "\",\"image_url\":\"" + image_url + "\"},";
 			}
 		}
 	}
