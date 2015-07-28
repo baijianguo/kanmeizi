@@ -22,57 +22,47 @@
         android:id="@+id/toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ECF0F2"
+        android:background="@drawable/main_bottom_tab_bg"
         android:orientation="horizontal" >
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnBack"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2.5dp"
             android:layout_weight="1"
-            android:background="#ECF0F2"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/theme_toolbar_btn_back_fg_normal0" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnForward"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2.5dp"
             android:layout_weight="1"
-            android:background="#ECF0F2"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/theme_toolbar_btn_forward_fg_normal0" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnHome"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2.5dp"
             android:layout_weight="1"
-            android:background="#ECF0F2"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/theme_toolbar_btn_home_fg_normal2" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnRefresh"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2.5dp"
             android:layout_weight="1"
-            android:background="#ECF0F2"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/theme_adrbar_btn_refresh_normal0" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnExit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2.5dp"
             android:layout_weight="1"
-            android:background="#ECF0F2"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/theme_menu_btn_quit_fg_normal0" />
     </LinearLayout>
 

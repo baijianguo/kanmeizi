@@ -43,11 +43,11 @@ public class TencentX5Activity extends BaseActivity {
 
 	private TencentX5WebView mWebView;
 	private ViewGroup mViewParent;
-	private ImageButton mBack;
-	private ImageButton mForward;
-	private ImageButton mRefresh;
-	private ImageButton mExit;
-	private ImageButton mHome;
+	private View mBack;
+	private View mForward;
+	private View mRefresh;
+	private View mExit;
+	private View mHome;
 
 	private static final String TAG = "TencentX5";
 	public static String homepage = "http://www.iumol.com/";
@@ -206,10 +206,12 @@ public class TencentX5Activity extends BaseActivity {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int which) {
-										/*Toast.makeText(
-												TencentX5Activity.this,
-												"fake message: i'll download...",
-												1000).show();*/
+										/*
+										 * Toast.makeText(
+										 * TencentX5Activity.this,
+										 * "fake message: i'll download...",
+										 * 1000).show();
+										 */
 									}
 								})
 						.setNegativeButton("no",
@@ -219,10 +221,12 @@ public class TencentX5Activity extends BaseActivity {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										// TODO Auto-generated method stub
-										/*Toast.makeText(
-												TencentX5Activity.this,
-												"fake message: refuse download...",
-												1000).show();*/
+										/*
+										 * Toast.makeText(
+										 * TencentX5Activity.this,
+										 * "fake message: refuse download...",
+										 * 1000).show();
+										 */
 									}
 								})
 						.setOnCancelListener(
@@ -249,11 +253,11 @@ public class TencentX5Activity extends BaseActivity {
 						public Object onMiscCallBack(String method,
 								Bundle bundle) {
 							if (method == "onSecurityLevelGot") {
-								/*Toast.makeText(
-										TencentX5Activity.this,
-										"Security Level Check: \nit's level is "
-												+ bundle.getInt("level"), 1000)
-										.show();*/
+								/*
+								 * Toast.makeText( TencentX5Activity.this,
+								 * "Security Level Check: \nit's level is " +
+								 * bundle.getInt("level"), 1000) .show();
+								 */
 							}
 							return null;
 						}
@@ -293,11 +297,11 @@ public class TencentX5Activity extends BaseActivity {
 	}
 
 	private void initBtnListenser() {
-		mBack = (ImageButton) findViewById(R.id.btnBack);
-		mForward = (ImageButton) findViewById(R.id.btnForward);
-		mRefresh = (ImageButton) findViewById(R.id.btnRefresh);
-		mExit = (ImageButton) findViewById(R.id.btnExit);
-		mHome = (ImageButton) findViewById(R.id.btnHome);
+		mBack = findViewById(R.id.btnBack);
+		mForward = findViewById(R.id.btnForward);
+		mRefresh = findViewById(R.id.btnRefresh);
+		mExit = findViewById(R.id.btnExit);
+		mHome = findViewById(R.id.btnHome);
 		mBack.setOnClickListener(new OnClickListener() {
 
 			@Override

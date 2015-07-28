@@ -1,0 +1,39 @@
+{
+    "item": [
+        {
+            "title": "豆瓣妹子",
+            "logo": "",
+            "url": "http://www.dbmeinv.com/dbgroup/show.htm?pager_offset={page_index}",
+            "index_reg": "<div class=\"img_single\">.*?<a href=\"(.*?)\" class=\"link\" target=\"_topic_detail\">.*?<img class=\"height_min\" title=\"(.*?)\".*?src=\"(.*?)\"",
+            "attr_order": "url,title,img",
+            "detail_reg": "<div class=\"topic-figure cc\">.*?<img src=\"(.*?)\""
+        },
+        {
+            "title": "淘宝女郎",
+            "logo": "",
+            "url": "http://www.iumol.com/imagelist.php?type=taobao&page={page_index}",
+            "index_reg": "id\":\"(.*?)\",\"title\":\"(.*?)\",\"thum\":\"(.*?)\"",
+            "attr_order": "url,title,img",
+            "detail_reg": "image\":\"(.*?)\"",
+            "detial_url_pre": "http://www.iumol.com/imagedetial.php?id="
+        },
+        {
+            "title": "清纯唯美",
+            "logo": "",
+            "url": "http://www.mzitu.com/tag/tianmei/page/{page_index}",
+            "index_reg": "<figure>.*?<a href=\"(.*?)\" title=\"(.*?)\" >.*?<img.*?data-original=\"(.*?)\"",
+            "attr_order": "url,title,img",
+            "detail_reg": "<p><a href=\".*?\" ><img src=\"(.*?)\" alt=\".*?\" />",
+            "detail_loop_count": "20",
+            "detail_loop_patam": "/"
+        },
+        {
+            "title": "西美人",
+            "logo": "",
+            "url": "http://sexy.faceks.com/tag/%E6%AC%A7%E7%BE%8E?page={page_index}",
+            "index_reg": "<div class=\"pic\">.*?<a class=\"img\" href=\"(.*?)\">.*?<img src=\"(.*?)\" />.*?<div class=\"text\"><p>(.*?)</p>",
+            "attr_order": "url,img,title",
+            "detail_reg": "<img src=\"(.*?)\"/>"
+        }
+    ]
+}

@@ -1,10 +1,7 @@
 package com.iumol.kanmeizi.runnables;
 
-import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.R.integer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
