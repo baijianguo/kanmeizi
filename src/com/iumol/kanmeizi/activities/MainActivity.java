@@ -27,7 +27,6 @@ import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.util.StringUtils;
-import com.iumol.kanmeizi.x5.TencentX5Activity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -144,7 +143,7 @@ public class MainActivity extends BaseActivity implements
 
 	public void openWebView(String url) {
 
-		Intent it = new Intent(this, TencentX5Activity.class);
+		Intent it = new Intent(this, WebViewActivity.class);
 		if (!StringUtils.isBlank(url))
 			it.putExtra("url", url);
 		startActivity(it);
