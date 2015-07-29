@@ -38,7 +38,6 @@ public class MainActivity extends BaseActivity implements
 	private ListView mListView;
 	private ClassAdapter mAdapter;
 	private List<MzituUrl> mData;
-	private static final String MASTERSECRET = "HgZCYWI8c1616cwvkEAId1";
 	// ×ó»¬²Ëµ¥
 	private View mMenuBtn;
 	private DrawerLayout mDrawerLayout;
