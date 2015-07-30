@@ -2,8 +2,9 @@ package com.iumol.kanmeizi.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,13 +20,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.igexin.sdk.PushManager;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.dao.ImageClass;
-import com.iumol.kanmeizi.entity.MzituUrl;
+import com.iumol.kanmeizi.entity.ImageReg;
+import com.iumol.kanmeizi.util.HttpUtils;
+import com.iumol.kanmeizi.util.ImageCacheManager;
 import com.iumol.kanmeizi.util.StringUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -36,7 +43,7 @@ public class MainActivity extends BaseActivity implements
 
 	private ListView mListView;
 	private ClassAdapter mAdapter;
-	private List<MzituUrl> mData;
+	private List<ImageReg> imagelist;
 	// 左滑菜单
 	private View mMenuBtn;
 	private DrawerLayout mDrawerLayout;
@@ -68,12 +75,12 @@ public class MainActivity extends BaseActivity implements
 		mListView.setEmptyView(findViewById(android.R.id.empty));
 
 		// do we have saved data?
-		initMzituList();
-		mAdapter = new ClassAdapter(ImageClass.imageDrawable);
+		initData();
+
+		mAdapter = new ClassAdapter();
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
-
-		initListView();
+		initMenuListView();
 
 	}
 
@@ -82,56 +89,23 @@ public class MainActivity extends BaseActivity implements
 			int position, long id) {
 
 		MobclickAgent.onEvent(MainActivity.this, "list_" + position);
-		MzituUrl mzt = mData.get(position);
-		if ("图片导航".equals(mzt.getTitle()))
-			openWebView(mzt.getUrl());
+		ImageReg imageReg = imagelist.get(position);
+		if (StringUtils.isBlank(imageReg.getLogo()))
+			openWebView(imageReg.getUrl());
 		else {
-
-			openClassActivity(mzt);
+			openClassActivity(imageReg);
 		}
 
 	}
 
-	public void openClassActivity(MzituUrl mzt) {
+	public void openClassActivity(ImageReg imageReg) {
 
 		Intent mIntent = new Intent(this, ImageListActivity.class);
 		Bundle mBundle = new Bundle();
-		mBundle.putSerializable("mzt", mzt);
+		mBundle.putSerializable("ImageReg", imageReg);
 		mIntent.putExtras(mBundle);
 		startActivity(mIntent);
 
-	}
-
-	private void initListView() {
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-		// mPlanetTitles = getResources().getStringArray(R.array.planets_array);
-
-		// Set the adapter for the list view
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.list_item, ImageClass.MenuImageTitle));
-		// Set the list's click listener
-		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// Highlight the selected item, update the title, and close the
-				MobclickAgent.onEvent(MainActivity.this, "menu_" + position);
-				// drawer
-				if ("关于我们".equals(ImageClass.MenuImageTitle[position]))
-					openAboutView();
-
-				else {
-					// MzituUrl mzt = new
-					// MzituUrl(ImageClass.MenuImageTitle[position],ImageClass.MenuImageUrl[position],
-					// "");
-					// openClassActivity(mzt);
-					openWebView(ImageClass.MenuImageUrl[position]);
-				}
-				mDrawerLayout.closeDrawer(mDrawerList);
-			}
-		});
 	}
 
 	public void openAboutView() {
@@ -149,19 +123,120 @@ public class MainActivity extends BaseActivity implements
 		startActivity(it);
 	}
 
-	public void initMzituList() {
-		mData = new LinkedList<MzituUrl>();
+	public void initData() {
+		imagelist = new ArrayList<ImageReg>();
+		ImageReg webapp = new ImageReg(1000, "http://www.iumol.com", "妹子导航");
+		imagelist.add(webapp);
+		new Thread(new Runnable() {
 
-		for (String[] MzituData : ImageClass.MztImageInfo) {
-			MzituUrl mzt = new MzituUrl(MzituData[0], MzituData[1], "");
-			mData.add(mzt);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String httpUrl = "http://iumol.com/kmz/reglist.php";
+				String result = HttpUtils.httpGetString(httpUrl);
+				List<ImageReg> imageRegs = getImageRegs(result);
+				if (imageRegs != null && imageRegs.size() > 0) {
+					Message msg = Message.obtain();
+					if (handler != null && msg != null) {
+						msg.obj = imageRegs;
+						msg.what = imageRegs.size();
+						handler.sendMessage(msg);
+					}
+				} else {
+					if (handler != null)
+						handler.sendEmptyMessage(-1);
+				}
+			}
+		}).start();
+
+	}
+
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case -1:
+				break;
+
+			default:
+				if (msg.obj != null) {
+					imagelist.addAll((List<ImageReg>) msg.obj);
+					mAdapter.notifyDataSetChanged();
+				}
+				break;
+			}
 		}
+
+	};
+
+	public List<ImageReg> getImageRegs(String str) {
+		List<ImageReg> imageRegs = null;
+		if (StringUtils.isBlank(str))
+			return null;
+		try {
+			JSONObject json = new JSONObject(str);
+			if (json != null && json.has("item")) {
+				JSONArray imageRegArray = json.getJSONArray("item");
+				imageRegs = new ArrayList<ImageReg>();
+				if (imageRegArray != null) {
+					for (int i = 0; i < imageRegArray.length(); i++) {
+						JSONObject jsonImageReg = imageRegArray
+								.getJSONObject(i);
+						ImageReg imageReg = new ImageReg();
+						if (jsonImageReg.has("id")) {
+							imageReg.setId(jsonImageReg.getInt("id"));
+						}
+						if (jsonImageReg.has("logo")) {
+							imageReg.setLogo(jsonImageReg.getString("logo"));
+						}
+						if (jsonImageReg.has("title")) {
+							imageReg.setTitle(jsonImageReg.getString("title"));
+						}
+						if (jsonImageReg.has("url")) {
+							imageReg.setUrl(jsonImageReg.getString("url"));
+						}
+						if (jsonImageReg.has("thum_reg")) {
+							imageReg.setThumReg(jsonImageReg
+									.getString("thum_reg"));
+						}
+						if (jsonImageReg.has("imgs_reg")) {
+							imageReg.setImgsReg(jsonImageReg
+									.getString("imgs_reg"));
+						}
+						if (jsonImageReg.has("attri_order")) {
+							imageReg.setAttriOrder(jsonImageReg
+									.getString("attri_order"));
+						}
+						if (jsonImageReg.has("details_loop_param")) {
+							imageReg.setDetailsLoopParam(jsonImageReg
+									.getString("details_loop_param"));
+						}
+						if (jsonImageReg.has("details_loop_count")) {
+							imageReg.setDetailsLoopCount(jsonImageReg
+									.getInt("details_loop_count"));
+						}
+						if (jsonImageReg.has("details_url_pre")) {
+							imageReg.setDetailsUrlPre(jsonImageReg
+									.getString("details_url_pre"));
+						}
+						if (jsonImageReg.has("agent_pc")) {
+							imageReg.setAgentPc(jsonImageReg.getInt("agent_pc") == 0 ? false
+									: true);
+						}
+						imageRegs.add(imageReg);
+					}
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return imageRegs;
 	}
 
 	public class ClassAdapter extends BaseAdapter {
 
-		private static final String TAG = "SampleAdapter";
-		int[] imageDrawable;
 		private final LayoutInflater mLayoutInflater;
 
 		final class ViewHolder {
@@ -169,11 +244,10 @@ public class MainActivity extends BaseActivity implements
 			TextView textview;
 		}
 
-		public ClassAdapter(int[] imageDrawable) {
+		public ClassAdapter() {
 
 			mLayoutInflater = LayoutInflater.from(MainActivity.this);
 
-			this.imageDrawable = imageDrawable;
 		}
 
 		@Override
@@ -182,7 +256,6 @@ public class MainActivity extends BaseActivity implements
 
 			ViewHolder vh;
 			if (convertView == null) {
-				ImageView image_view = null;
 				convertView = mLayoutInflater.inflate(R.layout.list_item_class,
 						parent, false);
 				vh = new ViewHolder();
@@ -194,24 +267,23 @@ public class MainActivity extends BaseActivity implements
 				vh = (ViewHolder) convertView.getTag();
 			}
 
-			/*
-			 * Bitmap bmp = BitmapDecoder.decodeSampledBitmapFromResource(
-			 * mContext.getResources(), imageDrawable[position],
-			 * SystemUtils.getScreenWidth(mContext), 0);
-			 * vh.imageview.setImageBitmap(bmp);
-			 */
-			Drawable drawable = getResources().getDrawable(
-					imageDrawable[position]);
-			vh.imageview.setImageDrawable(drawable);
-			String title = mData.get(position).getTitle();
-			vh.textview.setText(title);
+			ImageReg image = imagelist.get(position);
+			if (StringUtils.isBlank(image.getLogo())) {
+				vh.imageview.setImageDrawable(getResources().getDrawable(
+						R.drawable.gengduo));
+			} else {
+				ImageCacheManager.getImageCache().get(image.getLogo(),
+						vh.imageview);
+			}
+
+			vh.textview.setText(image.getTitle());
 			return convertView;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return imageDrawable.length;
+			return imagelist.size();
 		}
 
 		@Override
@@ -242,4 +314,33 @@ public class MainActivity extends BaseActivity implements
 		super.onPause();
 
 	}
+
+	private void initMenuListView() {
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+		// mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+
+		// Set the adapter for the list view
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.list_item, ImageClass.MenuImageTitle));
+		// Set the list's click listener
+		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// Highlight the selected item, update the title, and close the
+				MobclickAgent.onEvent(MainActivity.this, "menu_" + position);
+				// drawer
+				if ("关于我们".equals(ImageClass.MenuImageTitle[position]))
+					openAboutView();
+
+				else {
+					openWebView(ImageClass.MenuImageUrl[position]);
+				}
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
+		});
+	}
+
 }

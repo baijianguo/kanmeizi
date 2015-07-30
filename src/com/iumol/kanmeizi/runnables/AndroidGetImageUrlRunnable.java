@@ -1,75 +1,47 @@
 package com.iumol.kanmeizi.runnables;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
+import com.iumol.kanmeizi.entity.ImageReg;
 import com.iumol.kanmeizi.util.HttpUtils;
 import com.iumol.kanmeizi.util.StringUtils;
 
 public class AndroidGetImageUrlRunnable implements Runnable {
 
-	public static String[] mzituUrls = {
-			"http://www.mzitu.com/mm/page/",
-			"http://www.mzitu.com/tag/rosi/page/",
-			"http://www.mzitu.com/tag/%E6%9C%89%E6%B2%9F%E5%BF%85%E7%81%AB/page/",
-			"http://www.mzitu.com/tag/%E7%A7%80%E4%BA%BA%E6%A8%A1%E7%89%B9/page/",
-			"http://www.mzitu.com/japan/page/",
-			"http://www.mzitu.com/model/page/",
-			"http://www.mzitu.com/taiwan/page/",
-			"http://www.mzitu.com/tag/tuigirl/page/" };
-	static String dbmzUrl = "http://www.dbmeizi.com/?p=";
-
 	public int page = 0;
 	public Handler mHandler = null;
 	public String json = "";
-	public String mUrl = "";
+	public ImageReg imageReg;
 
-	public AndroidGetImageUrlRunnable(Handler handler, String url, int page) {
+	public AndroidGetImageUrlRunnable(Handler handler, ImageReg imageReg,
+			int page) {
 		this.page = page;
 		this.mHandler = handler;
-		this.mUrl = url;
+		this.imageReg = imageReg;
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		if (imageReg != null) {
 
-		// String url = dbmzUrl + page;
-		String url;
-		if (!StringUtils.isBlank(mUrl)) {
 			json = "{\"count\":\"6\",\"item\":[";
-			if (mUrl.indexOf("dbmeinv.com/") > 0) {
-				url = String.format(mUrl, page);
-				String strHtml = HttpGet(url);
-				RegexDBImageUrl(strHtml);
-			} else if (mUrl.indexOf("faceks.com/") > 0) {
-				url = mUrl + page;
-				String strHtml = HttpUtils.httpGetStringPcAgent(url);
-				RegexFaceksIndex(strHtml);
-			} else if (mUrl.indexOf("weibo.com/area.php") > 0) {
-				url = mUrl + page;
-				String strHtml = HttpGet(url);
-				RegexWeiboIndex(strHtml);
-			} else if (mUrl.indexOf("weibo.com/5show/aixiu.php") > 0) {
-				url = mUrl + page;
-				String strHtml = HttpGet(url);
-				RegexTuxiuIndex(strHtml);
-			} else if (mUrl.indexOf("weimei58.com/") > 0) {
-				url = mUrl + page;
-				String strHtml = HttpUtils.httpGetStringPcAgent(url);
-				Regex58Index(strHtml);
-			} else if (mUrl.indexOf("iumol.com/") > 0) {
-				url = mUrl + page;
-				String strHtml = HttpUtils.httpGetString(url);
-				RegexTaobaoIndex(strHtml);
-			} else {
-				url = mUrl + page;
-				String strHtml = HttpGet(url);
-				RegexUrlIndex(strHtml);
-			}
+			String strHtml;
+			String url = imageReg.getUrl().replace("{page_index}",
+					String.valueOf(page));
+			if (imageReg.isAgentPc())
+				strHtml = HttpUtils.httpGetStringPcAgent(url);
+			else
+				strHtml = HttpGet(url);
+
+			RegexUrlIndex(strHtml);
 
 			json = json.substring(0, json.length() - 1);
 			json += "]}";
@@ -81,29 +53,48 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		mHandler.sendMessage(msg);
 	}
 
+	public void pushData(String thum, String title, String url) {
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("thum_url", thum);
+		map.put("title", title);
+		map.put("details_url", imageReg.getDetailsUrlPre() + url);
+		map.put("reg_id", String.valueOf(imageReg.getId()));
+		map.put("type_name", imageReg.getTitle());
+		String result = HttpUtils.httpPostString(
+				"http://iumol.com/kmz/push.php", map);
+		Log.i("AndroidGetImageUrlRunnable", result);
+
+	}
+
 	// 从分类获取图片List
 	public void RegexUrlIndex(String str) {
 
-		String reg = "<figure>.*?<a href=\"(.*?)\" title=\"(.*?)\" >.*?<img.*?data-original=\"(.*?)\"";
-		String re = "\\[([^\\]]+)\\]";
 		str = str.replace("\n", "");
-		Pattern p = Pattern.compile(reg);
+		str = str.replace("&nbsp;", " ");
+		str = str.replace("<br />", " ");
+
+		Pattern p = Pattern.compile(imageReg.getThumReg());
 		if (!StringUtils.isBlank(str)) {
 			Matcher m = p.matcher(str);
 			while (m.find()) {
-				String url = m.group(1);
-				String title = m.group(2);
-				String image_url = m.group(3);
-				// String html = HttpGet(url);
-				// RegexImageUrl(url, html);
+				String url = "", title = "", image_url = "";
+				String[] attriOrder = imageReg.getAttriOrder().split(",");
+				for (int i = 0; i < attriOrder.length; i++) {
+					if ("title".equals(attriOrder[i])) {
+						title = m.group(i + 1);
+					} else if ("thum".equals(attriOrder[i])) {
+						image_url = m.group(i + 1);
+					} else {
+						url = m.group(i + 1);
+					}
+				}
+				pushData(image_url, title, url);
 				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
 						+ "\",\"image_url\":\"" + image_url + "\"},";
 			}
 		}
 	}
-
-	String img1 = "TB11USwGXXXXXbSXFXXBaku.pXX-238-239.png";
-	String img2 = "TB1Ui9xGXXXXXaJXFXXBaku.pXX-238-239.png";
 
 	// 从分类获取图片List
 	public void RegexTaobaoIndex(String str) {

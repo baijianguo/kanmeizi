@@ -23,6 +23,7 @@ import com.iumol.kanmeizi.bitmap.core.FinalBitmap.ImageLoadCompleteListener;
 
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.adapters.SampleAdapter;
+import com.iumol.kanmeizi.entity.ImageReg;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.grid.StaggeredGridView;
 import com.iumol.kanmeizi.runnables.AndroidGetImageUrlRunnable;
@@ -49,22 +50,22 @@ public class ImageListActivity extends BaseActivity implements
 	private FinalBitmap fb;
 	private View loadView;
 
-	private MzituUrl mzt;
+	private ImageReg imageReg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_image);
 
-		if (null != getIntent().getSerializableExtra("mzt")) {
-			mzt = (MzituUrl) getIntent().getSerializableExtra("mzt");
+		if (null != getIntent().getSerializableExtra("ImageReg")) {
+			imageReg = (ImageReg) getIntent().getSerializableExtra("ImageReg");
 		} else {
 			this.finish();
 		}
 
 		setTitle(getResources().getString(R.string.app_name));
 		TextView titleView = (TextView) findViewById(R.id.app_title);
-		titleView.setText(mzt.getTitle());
+		titleView.setText(imageReg.getTitle());
 
 		ImageView btnMenu = (ImageView) findViewById(R.id.menu_btn);
 		btnMenu.setImageDrawable(getResources().getDrawable(
@@ -105,7 +106,7 @@ public class ImageListActivity extends BaseActivity implements
 
 		if (SystemUtils.isNetWorkConnect(this)) {
 			AndroidGetImageUrlRunnable getlistitem = new AndroidGetImageUrlRunnable(
-					mHandler, mzt.getUrl(), page++);
+					mHandler, imageReg, page++);
 			new Thread(getlistitem).start();
 		} else {
 			ToastUtils.show(this, "ÍøÂçÁ¬½Ó´íÎó£¡");
@@ -174,6 +175,7 @@ public class ImageListActivity extends BaseActivity implements
 		MzituUrl mzt = mData.get(position);
 		if (null != mzt) {
 			mBundle.putSerializable("mzt", mzt);
+			mBundle.putSerializable("ImageReg", imageReg);
 			mIntent.putExtras(mBundle);
 			startActivity(mIntent);
 		}

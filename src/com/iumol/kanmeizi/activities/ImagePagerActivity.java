@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.LinkedList;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.adapters.UrlPagerAdapter;
+import com.iumol.kanmeizi.entity.ImageReg;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.photoview.PhotoView;
 import com.iumol.kanmeizi.runnables.DownloadDataRunnable;
@@ -50,6 +51,7 @@ public class ImagePagerActivity extends BaseActivity implements
 	private boolean isloading = false;
 	private LinkedList<MzituUrl> list_url;
 	private MzituUrl mzt = null;
+	private ImageReg imageReg = null;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	String iniUrl = "";
 	int current_index = 0;
@@ -65,6 +67,7 @@ public class ImagePagerActivity extends BaseActivity implements
 
 		if (null != getIntent().getSerializableExtra("mzt")) {
 			mzt = (MzituUrl) getIntent().getSerializableExtra("mzt");
+			imageReg = (ImageReg) getIntent().getSerializableExtra("ImageReg");
 		} else {
 			this.finish();
 		}
@@ -236,7 +239,7 @@ public class ImagePagerActivity extends BaseActivity implements
 			else
 				Setloading(true);
 			DownloadDataRunnable getlistitem = new DownloadDataRunnable(
-					mHandler, iniUrl);
+					mHandler, imageReg, iniUrl);
 			new Thread(getlistitem).start();
 		} else {
 			ToastUtils.show(this, "ÍøÂçÁ¬½Ó´íÎó£¡");
