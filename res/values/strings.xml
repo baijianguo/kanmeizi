@@ -7,6 +7,7 @@
     <string name="menu_item_clear_disc_cache">清除磁盘缓存</string>
     <string name="menu_item_save_to_disc">保存到本地</string>
     <string name="image_content">图片描述</string>
+    <string name="exit_press_back_twice_message">再按一次退出看妹子</string>
 
     <!-- webview -->
     <string name="Main.FileChooserPrompt">选择要上载的文件</string>

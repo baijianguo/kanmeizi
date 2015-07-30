@@ -4,6 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.R.integer;
+import android.R.string;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -51,6 +58,36 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		Message msg = new Message();
 		msg.setData(data);
 		mHandler.sendMessage(msg);
+		if (!imageReg.getUrl().contains("iumol.com"))
+			lastPushImage(json);
+	}
+
+	public void lastPushImage(String json) {
+		try {
+			JSONObject jsonObject = new JSONObject(json);
+			if (jsonObject == null || !jsonObject.has("item"))
+				return;
+			JSONArray jsonArray = jsonObject.getJSONArray("item");
+			int len = jsonArray.length();
+			if (jsonArray == null || 0 >= len)
+				return;
+
+			for (int i = 0; i < len; i++) {
+				JSONObject jsonItem = jsonArray.getJSONObject(i);
+				String title = "", thum = "", url = "";
+				if (jsonItem.has("title"))
+					title = jsonItem.getString("title");
+				if (jsonItem.has("image_url"))
+					thum = jsonItem.getString("image_url");
+				if (jsonItem.has("url"))
+					url = jsonItem.getString("url");
+				pushData(thum, title, url);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void pushData(String thum, String title, String url) {
@@ -89,7 +126,7 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 						url = m.group(i + 1);
 					}
 				}
-				pushData(image_url, title, url);
+
 				json += "{\"title\":\"" + title + "\",\"url\":\"" + url
 						+ "\",\"image_url\":\"" + image_url + "\"},";
 			}

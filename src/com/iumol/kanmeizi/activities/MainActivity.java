@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -29,8 +30,10 @@ import org.json.JSONObject;
 
 import com.igexin.sdk.PushManager;
 import com.iumol.kanmeizi.R;
+import com.iumol.kanmeizi.constant.AndroidConstants;
 import com.iumol.kanmeizi.dao.ImageClass;
 import com.iumol.kanmeizi.entity.ImageReg;
+import com.iumol.kanmeizi.service.impl.ImageCache;
 import com.iumol.kanmeizi.util.HttpUtils;
 import com.iumol.kanmeizi.util.ImageCacheManager;
 import com.iumol.kanmeizi.util.StringUtils;
@@ -40,7 +43,7 @@ import com.umeng.update.UmengUpdateAgent;
 @SuppressLint("NewApi")
 public class MainActivity extends BaseActivity implements
 		AbsListView.OnItemClickListener {
-
+	private long mExitTime;
 	private ListView mListView;
 	private ClassAdapter mAdapter;
 	private List<ImageReg> imagelist;
@@ -96,6 +99,39 @@ public class MainActivity extends BaseActivity implements
 			openClassActivity(imageReg);
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		finishTask();
+		super.onDestroy();
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+
+	/**
+	 * 
+	 * 退出系统
+	 * **/
+	public void finishTask() {
+
+		// 保存图片缓存
+		ImageCache IMAGE_CACHE = ImageCacheManager.getImageCache();
+		IMAGE_CACHE.saveDataToDb(this, AndroidConstants.IMAGE_CACHE_TAG);
+
+		AppManager.getAppManager().AppExit(this);
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		if ((System.currentTimeMillis() - mExitTime) > 2000) {
+			Toast.makeText(this, R.string.exit_press_back_twice_message,
+					Toast.LENGTH_SHORT).show();
+			mExitTime = System.currentTimeMillis();
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	public void openClassActivity(ImageReg imageReg) {

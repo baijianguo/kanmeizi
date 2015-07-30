@@ -14,4 +14,6 @@ package com.iumol.kanmeizi.constant;
 public class AndroidConstants {
     /** same to {@link oVERSION_CODES.ICE_CREAM_SANDWICH} **/
     public static final int ICE_CREAM_SANDWICH = 14;
+    
+	public static final String IMAGE_CACHE_TAG = "AppNativeImageCacheTag";
 }

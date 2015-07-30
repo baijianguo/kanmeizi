@@ -9,17 +9,12 @@ import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.photoview.PhotoView;
 import com.iumol.kanmeizi.runnables.DownloadDataRunnable;
 import com.iumol.kanmeizi.runnables.SaveImageRunnable;
+import com.iumol.kanmeizi.util.ImageCacheManager;
 import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
 import com.iumol.kanmeizi.util.StringUtils;
 import com.iumol.kanmeizi.util.SystemUtils;
 import com.iumol.kanmeizi.util.ToastUtils;
 import com.iumol.kanmeizi.view.ViewPagerFixed;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -46,13 +41,12 @@ public class ImagePagerActivity extends BaseActivity implements
 
 	private ViewPagerFixed mViewPager = null;
 	private SamplePagerAdapter pagerAdapter = null;
-	DisplayImageOptions options;
+
 	private Handler mHandler = null;
 	private boolean isloading = false;
 	private LinkedList<MzituUrl> list_url;
 	private MzituUrl mzt = null;
 	private ImageReg imageReg = null;
-	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	String iniUrl = "";
 	int current_index = 0;
 
@@ -93,14 +87,6 @@ public class ImagePagerActivity extends BaseActivity implements
 		mViewPager = (ViewPagerFixed) findViewById(R.id.pager);
 		pagerAdapter = new SamplePagerAdapter();
 		mViewPager.setAdapter(pagerAdapter);
-
-		options = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_empty)
-				.showImageOnFail(R.drawable.ic_error)
-				.resetViewBeforeLoading(true).cacheOnDisk(true)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-				.displayer(new FadeInBitmapDisplayer(300)).build();
 
 		initHandler();
 		iniUrl = mzt.getUrl();
@@ -145,39 +131,12 @@ public class ImagePagerActivity extends BaseActivity implements
 			View imageLayout = inflater.inflate(R.layout.item_pager_image,
 					container, false);
 			assert imageLayout != null;
+
 			PhotoView imageView = (PhotoView) imageLayout
 					.findViewById(R.id.image);
+			ImageCacheManager.getImageCache().get(getPostionUrl(position),
+					imageView);
 
-			final ProgressBar spinner = (ProgressBar) imageLayout
-					.findViewById(R.id.loading);
-			if (imageLoader.isInited())
-				imageLoader.displayImage(list_url.get(position).getImageUrl(),
-						imageView, options, new SimpleImageLoadingListener() {
-							@Override
-							public void onLoadingStarted(String imageUri,
-									View view) {
-								spinner.setVisibility(View.VISIBLE);
-							}
-
-							@Override
-							public void onLoadingFailed(String imageUri,
-									View view, FailReason failReason) {
-								// String message = null;
-								spinner.setVisibility(View.GONE);
-							}
-
-							@Override
-							public void onLoadingComplete(String imageUri,
-									View view, Bitmap loadedImage) {
-								spinner.setVisibility(View.GONE);
-							}
-						});
-
-			// imageView.setImageResource(sDrawables[position]);
-			if (list_url.size() > 0 && list_url.size() % 20 == 0) {
-				imageLoader.clearMemoryCache();
-				imageLoader.clearDiskCache();
-			}
 			container.addView(imageLayout, LayoutParams.MATCH_PARENT,
 					LayoutParams.MATCH_PARENT);
 
@@ -207,7 +166,7 @@ public class ImagePagerActivity extends BaseActivity implements
 
 	@Override
 	public void onBackPressed() {
-		imageLoader.stop();
+
 		super.onBackPressed();
 	}
 
@@ -291,40 +250,10 @@ public class ImagePagerActivity extends BaseActivity implements
 
 	}
 
-	private void SaveBitmap() {
-		// TODO Auto-generated method stub
-
-		String url = pagerAdapter.getPostionUrl(current_index);
-		File file = (imageLoader.getDiskCache()).get(url);
-
-		if (null != file) {
-			SaveImageRunnable sbr = new SaveImageRunnable(url, file.getPath());
-			new Thread(sbr).start();
-			ToastUtils.show(this, "ÒÑ±£´æµ½ kanmeizi/images/");
-		}
-
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.item_clear_memory_cache:
-			imageLoader.clearMemoryCache();
-			return true;
-		case R.id.item_clear_disc_cache:
-			imageLoader.clearDiscCache();
-			return true;
-		case R.id.item_save_to_disc:
-			SaveBitmap();
-			return true;
-		default:
-			return false;
-		}
-	}
 }
