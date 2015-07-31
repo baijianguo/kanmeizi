@@ -72,9 +72,11 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 				float column_count = mContext.getResources().getInteger(
 						R.integer.column_count);
 
-				float request_width = width / column_count;
+				// 屏幕宽度的
+				float request_width = (width / column_count) / 1.2f;
 				float bw = bm.getWidth();
-				if (request_width > (bw - 10)) {
+
+				if (Math.abs(request_width - bw) > 20) {
 					float scale = request_width / bw;
 					Matrix matrix = new Matrix();
 					matrix.postScale(scale, scale); // 长和宽放大缩小的比例

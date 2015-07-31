@@ -1,6 +1,5 @@
 package com.iumol.kanmeizi.util;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -47,10 +46,15 @@ public class SystemUtils {
 		return availableProcessors > max ? max : availableProcessors;
 	}
 
+	private static int SCREEN_WIDTH = 0;
+
 	public static int getScreenWidth(Context context) {
-		DisplayMetrics metric = new DisplayMetrics();
-		metric = context.getResources().getDisplayMetrics();
-		return metric.widthPixels; // ÆÁÄ»¿í¶È£¨ÏñËØ£©
+		if (SCREEN_WIDTH == 0) {
+			DisplayMetrics metric = new DisplayMetrics();
+			metric = context.getResources().getDisplayMetrics();
+			SCREEN_WIDTH = metric.widthPixels;
+		}
+		return SCREEN_WIDTH; // ÆÁÄ»¿í¶È£¨ÏñËØ£©
 	}
 
 	public static String getVersionName(Context context) {
