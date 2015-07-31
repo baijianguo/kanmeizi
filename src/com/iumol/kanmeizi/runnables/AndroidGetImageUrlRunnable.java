@@ -100,20 +100,22 @@ public class AndroidGetImageUrlRunnable implements Runnable {
 		map.put("type_name", imageReg.getTitle());
 		String result = HttpUtils.httpPostString(
 				"http://iumol.com/kmz/push.php", map);
-		Log.i("AndroidGetImageUrlRunnable", result);
+		Log.i("AndroidGetImageUrlRunnable", result == null ? "提交错误！" : result);
 
 	}
 
 	// 从分类获取图片List
 	public void RegexUrlIndex(String str) {
 
-		str = str.replace("\n", "");
-		str = str.replace("&nbsp;", " ");
-		str = str.replace("<br />", " ");
-
-		Pattern p = Pattern.compile(imageReg.getThumReg());
 		if (!StringUtils.isBlank(str)) {
+
+			str = str.replace("\n", "");
+			str = str.replace("&nbsp;", " ");
+			str = str.replace("<br />", " ");
+
+			Pattern p = Pattern.compile(imageReg.getThumReg());
 			Matcher m = p.matcher(str);
+
 			while (m.find()) {
 				String url = "", title = "", image_url = "";
 				String[] attriOrder = imageReg.getAttriOrder().split(",");

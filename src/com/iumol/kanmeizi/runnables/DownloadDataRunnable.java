@@ -107,16 +107,18 @@ public class DownloadDataRunnable implements Runnable {
 		map.put("images", images);
 		String result = HttpUtils.httpPostString(
 				"http://iumol.com/kmz/push.php", map);
-		Log.i("DownloadDataRunnable", result);
+		Log.i("DownloadDataRunnable", result == null ? "提交错误！" : result);
 	}
 
 	// 从分类获取图片List
 	public String RegexImageUrl(String url, String str) {
 
-		String image = "";
-		str = str.replace("\n", "");
-		Pattern p = Pattern.compile(imageReg.getImgsReg());
+		String image = null;
+
 		if (!StringUtils.isBlank(str)) {
+
+			str = str.replace("\n", "");
+			Pattern p = Pattern.compile(imageReg.getImgsReg());
 			Matcher m = p.matcher(str);
 
 			while (m.find()) {

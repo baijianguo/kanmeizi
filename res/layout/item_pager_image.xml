@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#363636"
-    android:padding="1dip" >
+    android:background="@color/img_empty_page" >
 
     <ProgressBar
         android:id="@+id/loading"
@@ -16,7 +15,6 @@
         android:id="@+id/image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#363636"
         android:contentDescription="@string/app_name" />
 
 </FrameLayout>

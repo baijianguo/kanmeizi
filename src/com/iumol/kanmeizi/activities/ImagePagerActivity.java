@@ -1,6 +1,5 @@
 package com.iumol.kanmeizi.activities;
 
-import java.io.File;
 import java.util.LinkedList;
 import com.iumol.kanmeizi.R;
 import com.iumol.kanmeizi.adapters.UrlPagerAdapter;
@@ -8,7 +7,6 @@ import com.iumol.kanmeizi.entity.ImageReg;
 import com.iumol.kanmeizi.entity.MzituUrl;
 import com.iumol.kanmeizi.photoview.PhotoView;
 import com.iumol.kanmeizi.runnables.DownloadDataRunnable;
-import com.iumol.kanmeizi.runnables.SaveImageRunnable;
 import com.iumol.kanmeizi.util.ImageCacheManager;
 import com.iumol.kanmeizi.util.KanMeiZiParseUtils;
 import com.iumol.kanmeizi.util.StringUtils;
@@ -17,8 +15,6 @@ import com.iumol.kanmeizi.util.ToastUtils;
 import com.iumol.kanmeizi.view.ViewPagerFixed;
 
 import com.umeng.analytics.MobclickAgent;
-
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,13 +23,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ImagePagerActivity extends BaseActivity implements
@@ -50,7 +44,6 @@ public class ImagePagerActivity extends BaseActivity implements
 	String iniUrl = "";
 	int current_index = 0;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
