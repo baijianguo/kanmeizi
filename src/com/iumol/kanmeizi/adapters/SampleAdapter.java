@@ -63,24 +63,26 @@ public class SampleAdapter extends ArrayAdapter<MzituUrl> {
 
 		if (!url.isEmpty() && null != FinalBitmap.mImageCache) {
 			Bitmap bm = FinalBitmap.mImageCache.getBitmapFromMemCache(url);
-			if (null == bm) {
+			if (bm == null) {
 				bm = FinalBitmap.mImageCache.getBitmapFromDiskCache(url);
 				Log.d("SampleAdapter", "get bitmap from DiskCache " + url);
 			}
-			float width = SystemUtils.getScreenWidth(mContext);
-			float column_count = mContext.getResources().getInteger(
-					R.integer.column_count);
+			if (bm != null) {
+				float width = SystemUtils.getScreenWidth(mContext);
+				float column_count = mContext.getResources().getInteger(
+						R.integer.column_count);
 
-			float request_width = width / column_count;
-			float bw = bm.getWidth();
-			if (request_width > (bw - 10)) {
-				float scale = request_width / bw;
-				Matrix matrix = new Matrix();
-				matrix.postScale(scale, scale); // 长和宽放大缩小的比例
-				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
-						bm.getHeight(), matrix, true);
+				float request_width = width / column_count;
+				float bw = bm.getWidth();
+				if (request_width > (bw - 10)) {
+					float scale = request_width / bw;
+					Matrix matrix = new Matrix();
+					matrix.postScale(scale, scale); // 长和宽放大缩小的比例
+					bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+							bm.getHeight(), matrix, true);
+				}
+				vh.imageview.setImageBitmap(bm);
 			}
-			vh.imageview.setImageBitmap(bm);
 		}
 		if (!StringUtils.isBlank(title))
 			vh.titleview.setText(title);
